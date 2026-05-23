@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+  --background: #080809;
+  --foreground: #f4f4f5;
+  --surface: #111114;
+  --surface-2: #16161a;
+  --surface-3: #1c1c21;
+  --border: rgba(255,255,255,0.07);
+  --border-strong: rgba(255,255,255,0.14);
+  --accent: #a3e635;
+  --accent-dim: rgba(163,230,53,0.12);
+  --accent-glow: rgba(163,230,53,0.25);
+  --text: #e8e8ea;
+  --text-dim: #9898a6;
+  --gray-1: #a1a1aa;
+  --gray-2: #71717a;
+  --gray-3: #3f3f46;
+
+  --primary: #a3e635;
+  --primary-foreground: #0a0a0a;
+  --accent-bg: rgba(163,230,53,0.12);
+  --accent-foreground: #a3e635;
+  --muted-foreground: rgba(255,255,255,0.55);
+  --input: rgba(255,255,255,0.1);
+  --ring: rgba(163,230,53,0.4);
+  --card: rgba(255,255,255,0.02);
+  --card-foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
+  --font-display: 'Playfair Display', Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Noise overlay — subtle film grain like mobbin dark refs */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent);
+  color: #0a0a0a;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #2a2a30; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a42; }
+
+/* Font helpers */
+.font-display { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.03em; }
+.font-mono { font-family: var(--font-mono); }
+
+/* Gradient text */
+.text-gradient-lime {
+  background: linear-gradient(180deg, #e8ffb0 0%, #a3e635 60%, #7cb518 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Grid background */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(163,230,53,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(163,230,53,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Glow */
+.glow-lime {
+  box-shadow: 0 0 40px rgba(163,230,53,0.35), 0 0 80px rgba(163,230,53,0.12);
+}
