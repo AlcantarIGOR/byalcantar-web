@@ -69,7 +69,7 @@ export default function Navbar() {
               size="sm"
               className="bg-[#a3e635] text-black hover:bg-[#b8f069] rounded-full h-9 px-5 text-[13px] font-semibold shadow-[0_0_20px_rgba(163,230,53,0.35)]"
             >
-              Let&apos;s talk
+              Hablemos
             </Button>
           </Link>
         </div>
@@ -104,7 +104,7 @@ export default function Navbar() {
               ))}
               <Link href="/contact" onClick={() => setOpen(false)} className="block pt-2">
                 <Button className="w-full bg-[#a3e635] text-black hover:bg-[#b8f069] rounded-full">
-                  Let&apos;s talk
+                  Hablemos
                 </Button>
               </Link>
             </div>

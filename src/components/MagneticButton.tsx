@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 interface Props {
@@ -18,8 +19,7 @@ export function MagneticButton({
   onClick,
   strength = 0.35,
 }: Props) {
-  const anchorRef = useRef<HTMLAnchorElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 220, damping: 15, mass: 0.5 });
@@ -39,10 +39,28 @@ export function MagneticButton({
   };
 
   if (href) {
+    const isInternal = href.startsWith("/");
+
+    if (isInternal) {
+      return (
+        <motion.div
+          style={{ x: sx, y: sy, display: "inline-block" }}
+          onMouseMove={handleMove}
+          onMouseLeave={reset}
+        >
+          <Link href={href} className={className}>
+            {children}
+          </Link>
+        </motion.div>
+      );
+    }
+
     return (
       <motion.a
-        ref={anchorRef}
+        ref={ref as React.RefObject<HTMLAnchorElement>}
         href={href}
+        target="_blank"
+        rel="noreferrer"
         onMouseMove={handleMove}
         onMouseLeave={reset}
         style={{ x: sx, y: sy }}
@@ -52,9 +70,10 @@ export function MagneticButton({
       </motion.a>
     );
   }
+
   return (
     <motion.button
-      ref={buttonRef}
+      ref={ref as React.RefObject<HTMLButtonElement>}
       onClick={onClick}
       onMouseMove={handleMove}
       onMouseLeave={reset}
