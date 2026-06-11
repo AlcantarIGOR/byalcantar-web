@@ -1,403 +1,433 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import {
+import { 
+  Home as HomeIcon, 
+  Copy, 
+  Check, 
   ArrowUpRight,
-  Check,
-  Circle,
-  Clock,
-  ExternalLink,
-  FileSearch,
-  Github,
-  GraduationCap,
-  Building2,
-  Sparkles,
+  Play,
+  Pause,
+  RotateCw,
+  Send,
+  Calendar,
+  Sparkles
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { SectionLabel } from "@/components/SectionLabel";
-import { HeroBackground, AmbientGlow } from "@/components/Background";
+import Sidebar from "@/components/Sidebar";
 
-const featured = {
-  name: "MoodleSync",
-  tagline: "El OS del estudiante ITCG",
-  status: "En producción · Fase 6 activa",
-  url: "https://moodlesync.onyxinc.dev",
-  repo: "github.com/AlcantarIGOR/moodlesync-saas",
-  desc: "Convierte el portal escolar del ITCG en una experiencia moderna. Todo lo que un estudiante necesita — tareas, horario, calificaciones — en un solo lugar, siempre al día.",
-  stack: ["Next.js 16", "React 19", "TypeScript", "Prisma", "Supabase", "Tailwind v4", "Vercel"],
-  features: [
-    { t: "Todo en un lugar", d: "Tus tareas, horario y calificaciones aparecen solas — sin copiar, sin pegar, sin perder nada." },
-    { t: "Tablero de tareas", d: "Arrastra y organiza lo pendiente, lo que estás haciendo y lo que ya entregaste. Sin fricción." },
-    { t: "Exporta a tu calendario", d: "Tus entregas aparecen en Google Calendar o Apple Calendar con un click. Recordatorios incluidos." },
-    { t: "Pensado para el ITCG", d: "Entiende el semestre en curso, tu carrera y tu rutina. Hecho por un estudiante, para estudiantes." },
-  ],
-  roadmap: [
-    { phase: "Fase 1", state: "done", t: "Auth + Scaffold" },
-    { phase: "Fase 2", state: "done", t: "Sync de tareas + Dashboard" },
-    { phase: "Fase 3", state: "done", t: "Tareas manuales + Kanban" },
-    { phase: "Fase 4", state: "done", t: "Landing pública + .ics" },
-    { phase: "Fase 5", state: "done", t: "Free para todos · eliminada paywall" },
-    { phase: "Fase 6", state: "active", t: "Entrega de PDFs + reportes" },
-    { phase: "Fase 7", state: "soon", t: "Multi-campus expansion" },
-  ],
-};
+// 1. Audio Visualizer Prototype Component
+function AudioVisualizerWidget() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [bars, setBars] = useState<number[]>(Array(12).fill(15));
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-const otherProjects = [
-  {
-    name: "ONYX Inc.",
-    type: "Empresa",
-    icon: <Building2 size={18} />,
-    status: "En operación",
-    tagline: "Servicios digitales con IA para PyMEs locales",
-    desc: "Mi empresa de IA aplicada. Entregamos sitios, automatizaciones y asistentes — servicio gestionado, no SaaS. Arrancamos con dueños de gimnasios y barberías en CG.",
-    tags: ["n8n", "WhatsApp", "Claude", "Next.js"],
-    url: "https://onyxinc.dev",
-  },
-  {
-    name: "Open Carrusel",
-    type: "Herramienta interna",
-    icon: <Sparkles size={18} />,
-    status: "En uso",
-    tagline: "Automatización de carruseles con IA",
-    desc: "Creador visual de carruseles de Instagram usando Claude CLI, Puppeteer para renderizado y exportación a PNG, y Next.js 16. Diseñado para automatizar mi creación de contenido de marca personal.",
-    tags: ["Next.js 16", "Claude CLI", "Puppeteer", "Tailwind v4"],
-    url: "https://github.com/Hainrixz/open-carrusel",
-  },
-  {
-    name: "Diagnóstico Digital",
-    type: "Automatización · ONYX Inc.",
-    icon: <FileSearch size={18} />,
-    status: "Piloto interno",
-    tagline: "De entrevista a propuesta comercial en minutos",
-    desc: "Flujo que escucha la entrevista con un prospecto, detecta oportunidades de automatización y genera una propuesta comercial pre-llenada lista para presentar. El asistente de ventas que ONYX usa con sus clientes.",
-    tags: ["n8n", "IA", "Automatización"],
-    url: null,
-  },
-  {
-    name: "ONYX Digital System",
-    type: "Producto",
-    icon: <GraduationCap size={18} />,
-    status: "Diseño",
-    tagline: "Plataforma de servicios digitales unificada",
-    desc: "Sistema interno de ONYX Inc. para orquestar clientes, proyectos, automatizaciones activas y métricas. Pensado para escalar cuando el equipo crezca.",
-    tags: ["Next.js", "Postgres", "Dashboards"],
-    url: null,
-  },
-];
+  useEffect(() => {
+    if (isPlaying) {
+      timerRef.current = setInterval(() => {
+        setBars(bars.map(() => Math.floor(Math.random() * 55) + 8));
+      }, 120);
+    } else {
+      if (timerRef.current) clearInterval(timerRef.current);
+      setBars(Array(12).fill(15));
+    }
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [isPlaying]);
 
-const comingSoon = [
-  {
-    type: "Producto",
-    t: "byalcantar/blog",
-    d: "Notas técnicas sobre lo que estoy aprendiendo — IA, producto, sistemas.",
-    tag: "2026-Q3",
-  },
-  {
-    type: "Herramienta",
-    t: "ONYX Care",
-    d: "Panel de mantenimiento mensual para clientes de ONYX — uptime, logs, métricas.",
-    tag: "Q2",
-  },
-  {
-    type: "Experimento",
-    t: "Agente de ventas",
-    d: "LLM + n8n para calificar leads entrantes de ONYX y agendar demo automáticamente.",
-    tag: "WIP",
-  },
-];
+  return (
+    <div className="bg-[#222222]/20 border border-[#2c2c2c] rounded-xl p-5 space-y-4 flex flex-col justify-between h-64">
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[11px] font-mono text-[#a3e635] uppercase tracking-widest font-semibold">
+            Audio & Motion
+          </span>
+          <span className="text-[10px] font-mono text-white/30 uppercase">PROT-01</span>
+        </div>
+        <h3 className="text-white font-semibold text-[15px] mb-1">Visualizador de Audio</h3>
+        <p className="text-[#9b9b9b] text-[13px] leading-relaxed">
+          Experimento de animación reactiva que sincroniza dinámicamente frecuencias de sonido con elementos de la interfaz.
+        </p>
+      </div>
 
-function StatusIcon({ state }: { state: string }) {
-  if (state === "done")
-    return <Check size={13} className="text-emerald-400" />;
-  if (state === "active")
-    return <Circle size={10} fill="currentColor" className="text-[#a3e635] animate-pulse" />;
-  return <Clock size={12} className="text-white/30" />;
+      {/* Visualizer bars */}
+      <div className="h-20 flex items-end justify-center gap-1.5 bg-[#191919]/50 border border-[#2c2c2c]/40 rounded-lg px-4 select-none">
+        {bars.map((height, i) => (
+          <div
+            key={i}
+            className="w-2.5 bg-[#a3e635] rounded-t-sm transition-all duration-150 shadow-[0_0_8px_rgba(163,230,53,0.3)]"
+            style={{ height: `${height}%` }}
+          />
+        ))}
+      </div>
+
+      <button
+        onClick={() => setIsPlaying(!isPlaying)}
+        className="w-full inline-flex items-center justify-center gap-1.5 text-[12px] font-medium text-black bg-[#a3e635] hover:bg-[#b8f069] transition rounded-lg h-9 select-none"
+      >
+        {isPlaying ? (
+          <>
+            <Pause size={12} fill="currentColor" />
+            <span>Pausar Simulación</span>
+          </>
+        ) : (
+          <>
+            <Play size={12} fill="currentColor" />
+            <span>Tocar Audio</span>
+          </>
+        )}
+      </button>
+    </div>
+  );
 }
 
-export default function Projects() {
+// 2. 3D Particle Space Prototype Component
+function ParticleSpaceWidget() {
+  const [rotation, setRotation] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    let animFrame: number;
+    const tick = () => {
+      setRotation((prev) => (prev + 0.8) % 360);
+      animFrame = requestAnimationFrame(tick);
+    };
+    if (isActive) {
+      animFrame = requestAnimationFrame(tick);
+    }
+    return () => {
+      cancelAnimationFrame(animFrame);
+    };
+  }, [isActive]);
+
   return (
-    <main className="bg-[#080809] min-h-screen text-white overflow-x-hidden">
-      <Navbar />
-
-      {/* Hero */}
-      <section className="relative pt-40 pb-16 px-6 overflow-hidden">
-        <HeroBackground />
-        <div className="max-w-6xl mx-auto relative z-10">
-          <SectionLabel>Showcase</SectionLabel>
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="font-display text-[clamp(42px,6vw,78px)] font-extrabold text-white tracking-tight leading-[1.03] mb-6"
-          >
-            Cosas que <em className="text-[#a3e635] font-display italic">construí</em>
-            <br />
-            <span className="text-white/60">— y cosas que estoy construyendo.</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-white/55 text-lg max-w-2xl"
-          >
-            Proyectos reales, en producción o en camino. Todo es código propio,
-            deployado, con usuarios — no demos de portafolio.
-          </motion.p>
+    <div className="bg-[#222222]/20 border border-[#2c2c2c] rounded-xl p-5 space-y-4 flex flex-col justify-between h-64">
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[11px] font-mono text-[#a3e635] uppercase tracking-widest font-semibold">
+            3D WebGL Space
+          </span>
+          <span className="text-[10px] font-mono text-white/30 uppercase">PROT-02</span>
         </div>
-      </section>
+        <h3 className="text-white font-semibold text-[15px] mb-1">Proyecto Despertar 3D</h3>
+        <p className="text-[#9b9b9b] text-[13px] leading-relaxed">
+          Mini-motor de render de partículas interactivo en 3D para modelar atmósferas y shaders en navegadores.
+        </p>
+      </div>
 
-      {/* Featured — MoodleSync */}
-      <section className="px-6 py-16">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="relative bg-gradient-to-br from-[#111114] to-[#0a0a0c] border border-white/[0.08] rounded-3xl overflow-hidden"
-          >
-            <div className="absolute -top-32 right-0 w-[500px] h-[500px] bg-[#a3e635]/[0.08] rounded-full blur-3xl pointer-events-none" />
+      {/* 3D Simulation Box */}
+      <div className="h-20 bg-[#191919]/50 border border-[#2c2c2c]/40 rounded-lg flex items-center justify-center relative overflow-hidden select-none">
+        <div 
+          className="w-10 h-10 border border-dashed border-[#a3e635]/40 rounded-full flex items-center justify-center transition-transform"
+          style={{ transform: `rotate(${rotation}deg)` }}
+        >
+          <div className="w-1.5 h-1.5 bg-[#a3e635] rounded-full absolute -top-0.5" />
+          <div className="w-1.5 h-1.5 bg-[#a3e635] rounded-full absolute -bottom-0.5" />
+          <div className="w-2.5 h-2.5 border border-[#a3e635] rounded-full" />
+        </div>
+        
+        {/* Secondary rotating ring */}
+        <div 
+          className="w-16 h-16 border border-dashed border-white/5 rounded-full absolute transition-transform"
+          style={{ transform: `rotate(${-rotation * 0.5}deg)` }}
+        >
+          <div className="w-1 h-1 bg-white/20 rounded-full absolute -left-0.5" />
+        </div>
+      </div>
 
-            <div className="p-10 md:p-14 relative">
-              <div className="flex items-start justify-between mb-10 flex-wrap gap-6">
-                <div>
-                  <div className="inline-flex items-center gap-2 bg-[#a3e635]/10 border border-[#a3e635]/25 rounded-full px-3 py-1 mb-5">
-                    <GraduationCap size={13} className="text-[#a3e635]" />
-                    <span className="font-mono text-[11px] tracking-wider uppercase text-[#c4f060]">
-                      PROYECTO DESTACADO
-                    </span>
-                  </div>
-                  <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
-                    {featured.name}
-                  </h2>
-                  <p className="text-white/50 text-lg">{featured.tagline}</p>
-                </div>
-                <div className="inline-flex items-center gap-2 font-mono text-xs text-[#a3e635]">
-                  <span className="w-2 h-2 rounded-full bg-[#a3e635] animate-pulse" />
-                  {featured.status}
-                </div>
-              </div>
+      <button
+        onClick={() => setIsActive(!isActive)}
+        className="w-full inline-flex items-center justify-center gap-1.5 text-[12px] font-medium text-white hover:text-white transition border border-[#2c2c2c] rounded-lg h-9 bg-[#222222]/40 select-none"
+      >
+        <RotateCw size={12} className={isActive ? "animate-spin text-[#a3e635]" : "opacity-60"} />
+        <span>{isActive ? "Detener Rotación" : "Girar Orbitas"}</span>
+      </button>
+    </div>
+  );
+}
 
-              <p className="text-white/60 text-[15px] leading-relaxed max-w-3xl mb-10">
-                {featured.desc}
-              </p>
+// 3. Conversational Form Prototype Component
+function ConversationalFormWidget() {
+  const [step, setStep] = useState(0); // 0: Start, 1: Name, 2: Goal, 3: Completed
+  const [nameInput, setNameInput] = useState("");
+  const [name, setName] = useState("");
+  const [goal, setGoal] = useState("");
 
-              {/* Feature grid */}
-              <div className="grid md:grid-cols-2 gap-3 mb-10">
-                {featured.features.map((f) => (
-                  <div
-                    key={f.t}
-                    className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4"
-                  >
-                    <p className="text-white text-[14px] font-semibold mb-1">
-                      {f.t}
-                    </p>
-                    <p className="text-white/45 text-[13px] leading-relaxed">
-                      {f.d}
-                    </p>
-                  </div>
-                ))}
-              </div>
+  const resetForm = () => {
+    setStep(0);
+    setNameInput("");
+    setName("");
+    setGoal("");
+  };
 
-              {/* Stack */}
-              <div className="mb-10">
-                <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-white/40 mb-3">
-                  Stack
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {featured.stack.map((s) => (
-                    <span
-                      key={s}
-                      className="text-[12px] font-mono px-3 py-1.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-white/60"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
+  return (
+    <div className="bg-[#222222]/20 border border-[#2c2c2c] rounded-xl p-5 space-y-4 flex flex-col justify-between h-64">
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[11px] font-mono text-[#a3e635] uppercase tracking-widest font-semibold">
+            UX Flow & Logic
+          </span>
+          <span className="text-[10px] font-mono text-white/30 uppercase">PROT-03</span>
+        </div>
+        <h3 className="text-white font-semibold text-[15px] mb-1">Conversational Form</h3>
+        <p className="text-[#9b9b9b] text-[13px] leading-relaxed">
+          Motor de recopilación guiada que convierte inputs monótonos en un flujo conversacional animado.
+        </p>
+      </div>
 
-              {/* Roadmap */}
-              <div className="mb-10">
-                <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-white/40 mb-4">
-                  Roadmap
-                </p>
-                <div className="space-y-0">
-                  {featured.roadmap.map((r, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.05 }}
-                      className={`grid grid-cols-[100px_20px_1fr] gap-4 items-center py-3 border-t border-white/[0.05] ${
-                        r.state === "soon" ? "opacity-55" : ""
-                      }`}
-                    >
-                      <span className="font-mono text-xs text-white/50 tracking-wider">
-                        {r.phase}
-                      </span>
-                      <span className="flex items-center justify-center">
-                        <StatusIcon state={r.state} />
-                      </span>
-                      <span
-                        className={`text-[14px] ${
-                          r.state === "active"
-                            ? "text-white font-medium"
-                            : r.state === "done"
-                            ? "text-white/70"
-                            : "text-white/40"
-                        }`}
-                      >
-                        {r.t}
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+      {/* Form Area */}
+      <div className="h-20 bg-[#191919]/50 border border-[#2c2c2c]/40 rounded-lg p-3 flex flex-col justify-center text-[12px] font-mono relative overflow-hidden select-none">
+        {step === 0 && (
+          <div className="text-center space-y-1">
+            <span className="text-white/60">¿Listo para probar el formulario?</span>
+          </div>
+        )}
 
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={featured.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#a3e635] text-black hover:bg-[#b8f069] rounded-full px-6 h-11 text-[13px] font-semibold transition"
-                >
-                  Ver en vivo <ExternalLink size={13} />
-                </a>
-                <a
-                  href={`https://${featured.repo}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 hover:border-white/25 text-white rounded-full px-6 h-11 text-[13px] font-medium transition"
-                >
-                  <Github size={14} /> Repositorio
-                </a>
-              </div>
+        {step === 1 && (
+          <div className="space-y-1">
+            <span className="text-[#a3e635] block">SYS: ¿Cuál es tu nombre?</span>
+            <div className="flex gap-1.5 mt-1">
+              <input
+                type="text"
+                value={nameInput}
+                onChange={(e) => setNameInput(e.target.value)}
+                placeholder="Escribe aquí..."
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && nameInput.trim()) {
+                    setName(nameInput);
+                    setStep(2);
+                  }
+                }}
+                className="bg-[#222222]/50 border border-[#2c2c2c] rounded px-2 py-0.5 text-white w-full outline-none focus:border-[#a3e635]/40"
+              />
+              <button 
+                onClick={() => {
+                  if (nameInput.trim()) {
+                    setName(nameInput);
+                    setStep(2);
+                  }
+                }}
+                className="p-1 bg-[#a3e635] text-black rounded"
+              >
+                <Send size={10} />
+              </button>
             </div>
-          </motion.div>
+          </div>
+        )}
+
+        {step === 2 && (
+          <div className="space-y-1.5">
+            <span className="text-[#a3e635] block">SYS: Hola {name}, ¿qué buscas automatizar?</span>
+            <div className="flex gap-1 mt-1 justify-between">
+              {["Agenda", "Chatbot", "Reportes"].map((choice) => (
+                <button
+                  key={choice}
+                  onClick={() => {
+                    setGoal(choice);
+                    setStep(3);
+                  }}
+                  className="px-2 py-1 bg-[#222222]/60 hover:bg-[#a3e635] hover:text-black border border-[#2c2c2c] rounded text-[10px] text-white/80 transition"
+                >
+                  {choice}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {step === 3 && (
+          <div className="text-center space-y-1">
+            <span className="text-emerald-400 block font-bold">✓ Formulario Completado</span>
+            <span className="text-white/40 text-[10px]">Meta: {goal} · ¡Listo!</span>
+          </div>
+        )}
+      </div>
+
+      {step === 0 && (
+        <button
+          onClick={() => setStep(1)}
+          className="w-full inline-flex items-center justify-center gap-1.5 text-[12px] font-medium text-white hover:text-white transition border border-[#2c2c2c] rounded-lg h-9 bg-[#222222]/40 select-none"
+        >
+          <span>Comenzar Prototipo</span>
+        </button>
+      )}
+
+      {step > 0 && (
+        <button
+          onClick={resetForm}
+          className="w-full inline-flex items-center justify-center gap-1.5 text-[12px] font-medium text-white/50 hover:text-white transition border border-[#2c2c2c]/30 hover:border-[#2c2c2c] rounded-lg h-9 bg-transparent select-none"
+        >
+          <span>Reiniciar Flujo</span>
+        </button>
+      )}
+    </div>
+  );
+}
+
+// 4. Smart Scheduler Prototype Component
+function SmartSchedulerWidget() {
+  const [isScheduled, setIsScheduled] = useState(false);
+
+  return (
+    <div className="bg-[#222222]/20 border border-[#2c2c2c] rounded-xl p-5 space-y-4 flex flex-col justify-between h-64">
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[11px] font-mono text-[#a3e635] uppercase tracking-widest font-semibold">
+            Scheduling UI
+          </span>
+          <span className="text-[10px] font-mono text-white/30 uppercase">PROT-04</span>
         </div>
-      </section>
+        <h3 className="text-white font-semibold text-[15px] mb-1">Smart Scheduler UI</h3>
+        <p className="text-[#9b9b9b] text-[13px] leading-relaxed">
+          Módulo de agenda interactiva que calcula colisiones horarias y ofrece feedback visual de confirmación.
+        </p>
+      </div>
 
-      {/* Other projects */}
-      <section className="relative px-6 py-24">
-        <AmbientGlow />
-        <div className="max-w-6xl mx-auto relative">
-          <div className="mb-14">
-            <SectionLabel>Otros proyectos</SectionLabel>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-white tracking-tight">
-              Lo que sostiene el resto del ecosistema.
-            </h2>
+      {/* Scheduler display */}
+      <div className="h-20 bg-[#191919]/50 border border-[#2c2c2c]/40 rounded-lg flex items-center justify-center p-3 select-none relative overflow-hidden">
+        {isScheduled ? (
+          <div className="flex items-center gap-2 text-white/90 text-[12px] font-mono animate-fade-in">
+            <div className="w-5 h-5 rounded bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+              ✓
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold">Llamada de Diagnóstico</span>
+              <span className="text-[10px] text-[#9b9b9b]">Hoy · 5:30 PM (Confirmado)</span>
+            </div>
           </div>
+        ) : (
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-[11px] font-mono text-white/40 uppercase">Espacio sugerido</span>
+            <div className="px-3 py-1 bg-[#a3e635]/10 border border-[#a3e635]/25 rounded text-[11px] font-mono text-[#a3e635] animate-pulse">
+              Hoy · 5:30 PM
+            </div>
+          </div>
+        )}
+      </div>
 
-          <div className="grid md:grid-cols-3 gap-5">
-            {otherProjects.map((p, i) => (
-              <motion.div
-                key={p.name}
-                id={p.name.toLowerCase().replace(/\s+/g, "-")}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="group bg-[#111114] border border-white/[0.07] hover:border-[#a3e635]/25 rounded-2xl p-6 transition-all flex flex-col"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#a3e635]/10 border border-[#a3e635]/20 text-[#a3e635] flex items-center justify-center">
-                    {p.icon}
-                  </div>
-                  <span className="font-mono text-[10px] tracking-wider text-white/40 uppercase">
-                    {p.status}
-                  </span>
-                </div>
-                <p className="font-mono text-[10px] tracking-wider text-[#a3e635]/70 uppercase mb-1">
-                  {p.type}
-                </p>
-                <h3 className="text-white font-semibold text-xl mb-1">{p.name}</h3>
-                <p className="text-white/55 text-[13px] mb-3">{p.tagline}</p>
-                <p className="text-white/45 text-[13px] leading-relaxed mb-5 flex-1">
-                  {p.desc}
-                </p>
-                <div className="flex flex-wrap gap-1.5 mb-5">
-                  {p.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[10.5px] font-mono px-2 py-1 rounded-md bg-white/[0.03] border border-white/[0.06] text-white/55"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                {p.url && (
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-[#a3e635] text-[13px] font-medium hover:gap-2 transition-all"
-                  >
-                    Ver proyecto <ArrowUpRight size={14} />
-                  </a>
-                )}
-              </motion.div>
-            ))}
-          </div>
+      <button
+        onClick={() => setIsScheduled(!isScheduled)}
+        className="w-full inline-flex items-center justify-center gap-1.5 text-[12px] font-medium text-white hover:text-white transition border border-[#2c2c2c] rounded-lg h-9 bg-[#222222]/40 select-none"
+      >
+        <Calendar size={12} className={isScheduled ? "text-emerald-400" : "opacity-60"} />
+        <span>{isScheduled ? "Cancelar Reservación" : "Sugerir y Reservar"}</span>
+      </button>
+    </div>
+  );
+}
+
+export default function ProjectsContent() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText("https://byalcantar.me/projects");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <main className="min-h-screen bg-[#191919] text-[#f7facf] font-sans flex flex-col md:flex-row">
+      
+      {/* LEFT COLUMN: SIDEBAR */}
+      <Sidebar />
+
+      {/* RIGHT COLUMN: CONTENT */}
+      <div className="flex-1 flex flex-col min-w-0 md:h-screen md:overflow-y-auto bg-[#191919]">
+        
+        {/* Status Bar Banner */}
+        <div className="bg-[#a3e635] text-black text-[11px] font-mono tracking-widest font-semibold text-center py-2 uppercase border-b border-[#2c2c2c] shrink-0">
+          Disponible para proyectos · Automatizando desde Jalisco
         </div>
-      </section>
 
-      {/* Coming soon */}
-      <section className="px-6 py-24 border-t border-white/[0.05]">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-12">
-            <SectionLabel>Próximamente</SectionLabel>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-white tracking-tight flex items-center gap-4 flex-wrap">
-              En el horno
-              <Sparkles className="text-[#a3e635]" size={32} />
-            </h2>
+        {/* Top Local Navigation Bar */}
+        <header className="flex items-center justify-between border-b border-[#2c2c2c] px-6 py-4 sticky top-0 bg-[#191919]/90 backdrop-blur z-10 shrink-0">
+          <div className="flex items-center gap-2 text-[13px] font-mono text-white/90">
+            <Link href="/" className="hover:text-white transition flex items-center gap-1.5">
+              <HomeIcon size={14} className="text-[#a3e635]" />
+              <span>Home</span>
+            </Link>
+            <span className="text-white/30">/</span>
+            <span className="text-[#9b9b9b]">Interface Lab</span>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-5">
-            {comingSoon.map((c, i) => (
-              <motion.div
-                key={c.t}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-[#0a0a0c] border border-dashed border-white/[0.08] rounded-2xl p-6 hover:border-white/15 transition"
-              >
-                <p className="font-mono text-[10px] tracking-wider text-white/30 uppercase mb-3">
-                  {c.type}
-                </p>
-                <h3 className="text-white/60 font-semibold text-lg mb-2">{c.t}</h3>
-                <p className="text-white/35 text-[13px] leading-relaxed mb-4">
-                  {c.d}
-                </p>
-                <span className="inline-block text-[10.5px] font-mono px-2 py-1 rounded-md bg-white/[0.03] border border-white/[0.05] text-white/40">
-                  {c.tag}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-6 py-28">
-        <div className="max-w-3xl mx-auto text-center">
-          <h3 className="font-display text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
-            ¿Te late colaborar en algo así?
-          </h3>
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 bg-[#a3e635] text-black hover:bg-[#b8f069] rounded-full px-7 h-12 text-[14px] font-semibold shadow-[0_0_28px_rgba(163,230,53,0.35)] transition"
+          <button
+            onClick={handleCopyLink}
+            className="flex items-center gap-1.5 text-[12px] font-mono text-[#9b9b9b] hover:text-white transition border border-[#2c2c2c] rounded px-3 py-1 bg-[#222222]/40"
           >
-            Hablemos <ArrowUpRight size={15} />
-          </Link>
-        </div>
-      </section>
+            {copied ? (
+              <>
+                <Check size={12} className="text-[#a3e635]" />
+                <span className="text-white">Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy size={12} />
+                <span>Copy link</span>
+              </>
+            )}
+          </button>
+        </header>
 
-      <Footer />
+        {/* Scrollable Projects Content */}
+        <div className="flex-1 p-6 md:p-12 lg:p-16 max-w-4xl space-y-12">
+          
+          {/* Hero Bio */}
+          <section className="space-y-4">
+            <div className="space-y-2">
+              <span className="text-[11px] font-mono text-[#a3e635] uppercase tracking-widest block font-semibold">
+                Design Engineering
+              </span>
+              <h1 className="text-[32px] md:text-[42px] font-sans font-bold text-white tracking-tight leading-tight">
+                Interface Lab
+              </h1>
+            </div>
+            <p className="text-[14px] text-[#9b9b9b] leading-relaxed font-sans max-w-2xl">
+              Una colección de prototipos interactivos, exploraciones de diseño y pruebas de concepto de frontend desarrolladas en código (Next.js, Framer Motion y Tailwind CSS).
+            </p>
+          </section>
+
+          {/* Interactive Prototypes Grid */}
+          <section className="pt-6 border-t border-[#2c2c2c]/40 space-y-6">
+            <div className="flex items-center justify-between text-[11px] font-mono text-[#9b9b9b]/50 uppercase tracking-wider">
+              <span>Prototipos Activos</span>
+              <span>Total: 4</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <AudioVisualizerWidget />
+              <ParticleSpaceWidget />
+              <ConversationalFormWidget />
+              <SmartSchedulerWidget />
+            </div>
+          </section>
+
+          {/* Get in Touch CTA */}
+          <section className="pt-10 border-t border-[#2c2c2c]/40 space-y-4">
+            <div className="bg-[#222222]/20 border border-[#2c2c2c] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="space-y-2 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2 text-[#a3e635] text-[13px] font-mono uppercase tracking-wider">
+                  <Sparkles size={14} />
+                  <span>¿Tienes un reto de interfaz?</span>
+                </div>
+                <p className="text-[14px] text-[#9b9b9b] leading-relaxed font-sans max-w-lg">
+                  Si quieres llevar alguna de estas interacciones o integraciones a tus sistemas o proyectos de negocio, ponte en contacto.
+                </p>
+              </div>
+
+              <a
+                href="https://wa.me/523340865087"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-black bg-[#a3e635] hover:bg-[#b8f069] transition rounded-lg px-4 py-2 shrink-0 select-none"
+              >
+                <span>Hablemos de tu proyecto</span>
+                <ArrowUpRight size={13} />
+              </a>
+            </div>
+          </section>
+
+        </div>
+      </div>
     </main>
   );
 }

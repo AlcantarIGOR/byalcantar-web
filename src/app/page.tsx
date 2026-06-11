@@ -1,550 +1,414 @@
 "use client";
 
-import { useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import {
-  ArrowUpRight,
-  Code2,
-  Brain,
-  GraduationCap,
-  Zap,
-  Github,
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  ArrowUpRight, 
+  Home as HomeIcon, 
+  Copy, 
+  Check, 
+  Mail, 
   Instagram,
-  Mail,
+  GraduationCap,
+  MessageSquare,
+  Activity,
+  Gamepad2,
+  Briefcase,
+  FlaskConical,
+  Code2,
+  MapPin,
+  Phone,
+  Link as LinkIcon,
+  Clock,
+  User
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { HeroBackground, AmbientGlow } from "@/components/Background";
-import { SectionLabel } from "@/components/SectionLabel";
-import { MagneticButton } from "@/components/MagneticButton";
+import LocalTime from "@/components/LocalTime";
+import Sidebar from "@/components/Sidebar";
+import GithubContributions from "@/components/GithubContributions";
 
-/* ──────────────────────── HERO ──────────────────────── */
-function Hero() {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 120]);
-  const opacity = useTransform(scrollY, [0, 320], [1, 0]);
+// Experience Table Configuration
+const experience = [
+  {
+    company: "ONYX Inc.",
+    role: "Founder & AI Lead",
+    period: "Present",
+    id: "onyx-inc",
+    logo: "/logo_onyx.jpg",
+  },
+  {
+    company: "Cremería La Primavera",
+    role: "Encargado de Sistemas",
+    period: "2024–2026",
+    id: "la-primavera",
+    logo: "/logo_primavera.png",
+  },
+  {
+    company: "TecNM ITCG",
+    role: "Ingeniería en IA (1ª Gen)",
+    period: "2025–Present",
+    id: "itcg",
+    logo: "/logo_itcg.png",
+  },
+  {
+    company: "CBTis 226",
+    role: "Técnico en Programación",
+    period: "2022–2025",
+    id: "cbtis",
+    logo: "/logo_cbtis.png",
+  }
+];
+
+// Projects Configuration
+const projects = [
+  {
+    id: "moodlesync",
+    title: "MoodleSync",
+    subtitle: "PLATAFORMA EDUCATIVA · EL OS DEL ESTUDIANTE ITCG",
+    desc: "Plataforma que moderniza el portal Moodle de mi instituto. Sincroniza tareas, horarios, calificaciones y notificaciones en tiempo real, integrando un tablero Kanban y un bloc de notas dinámico. Migrado exitosamente a Next.js y deployado en Vercel.",
+    image: "/moodlesync_login.png",
+    fallbackColor: "from-lime-500/10 to-transparent",
+    icon: <GraduationCap size={20} className="text-[#a3e635]" />
+  },
+  {
+    id: "onyx-digital-system",
+    title: "ONYX Digital System",
+    subtitle: "SISTEMA OPERATIVO DIGITAL PARA PYMES",
+    desc: "Solución integral que combina sitio web profesional (Framer/Webflow), flujos de atención y comunicación automatizados (n8n, Evolution API, Google Calendar) y dashboards de métricas operativas en una sola entrega gestionada.",
+    image: "/onyx_digital_system.png",
+    fallbackColor: "from-emerald-500/10 to-transparent",
+    icon: <Briefcase size={20} className="text-emerald-400" />
+  },
+  {
+    id: "onyx-launch-pro",
+    title: "ONYX Launch / Pro",
+    subtitle: "PRESENCIA WEB Y AUTOMATIZACIÓN INICIAL",
+    desc: "Paquetes de despegue digital. Desde sitios web profesionales mobile-first sin fricción, hasta la integración de flujos simples de comunicación automática mediante n8n para optimizar la atención de leads.",
+    image: "/onyx_launch_pro.png",
+    fallbackColor: "from-purple-500/10 to-transparent",
+    icon: <Code2 size={20} className="text-purple-400" />
+  },
+  {
+    id: "onyx-care",
+    title: "ONYX Care",
+    subtitle: "MANTENIMIENTO Y SOPORTE RECURRENTE",
+    desc: "Servicio de retención mensual post-implementación. Asegura el correcto funcionamiento de tus sistemas, actualizaciones menores, soporte técnico inmediato y revisiones periódicas de métricas operativas del negocio.",
+    image: "/onyx_care.png",
+    fallbackColor: "from-blue-500/10 to-transparent",
+    icon: <Activity size={20} className="text-blue-400" />
+  }
+];
+
+// Fallback project image renderer
+function ProjectImage({ 
+  src, 
+  alt, 
+  fallbackColor, 
+  icon,
+  id 
+}: { 
+  src: string; 
+  alt: string; 
+  fallbackColor: string; 
+  icon: React.ReactNode;
+  id: string;
+}) {
+  const [imgFailed, setImgFailed] = useState(false);
 
   return (
-    <section className="relative min-h-screen w-full flex items-center overflow-hidden pt-24 pb-16 px-6">
-      <HeroBackground />
-
-      <div className="max-w-6xl mx-auto w-full grid md:grid-cols-[1.15fr_auto] gap-12 md:gap-20 items-center relative z-10">
-        <motion.div style={{ y, opacity }}>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-flex items-center gap-2.5 mb-8"
-          >
-            <span className="w-8 h-px bg-[#a3e635]" />
-            <span className="font-mono text-[11px] tracking-[0.16em] uppercase text-[#a3e635]">
-              AI Engineering · Founder · Builder
-            </span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-display text-[clamp(48px,7vw,88px)] font-extrabold leading-[1.02] tracking-tight text-white mb-6"
-          >
-            Hola — soy <em className="text-[#a3e635] not-italic font-display italic">Juan</em>.
-            <br />
-            <span className="text-white/70">
-              Construyo{" "}
-              <span className="text-gradient-lime">sistemas digitales</span>
-              {" "}que piensan.
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-white/55 text-lg md:text-xl leading-relaxed max-w-xl mb-4"
-          >
-            Estudiante de Ingeniería en IA en el ITCG Ciudad Guzmán. Fundador
-            de <span className="text-white">ONYX Inc.</span>. Creador de{" "}
-            <span className="text-white">MoodleSync</span>.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-white/40 text-sm md:text-base leading-relaxed max-w-lg mb-10"
-          >
-            Diseño herramientas, productos y automatizaciones que resuelven
-            problemas reales — con IA cuando suma, con código cuando aguanta.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.65 }}
-            className="flex flex-wrap gap-3 items-center"
-          >
-            <MagneticButton
-              href="/projects"
-              className="group inline-flex items-center gap-2 bg-[#a3e635] text-black hover:bg-[#b8f069] rounded-full px-6 h-11 text-[14px] font-semibold shadow-[0_0_28px_rgba(163,230,53,0.35)] transition"
-            >
-              Ver proyectos
-              <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </MagneticButton>
-            <MagneticButton
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-white/[0.04] text-white border border-white/[0.1] hover:border-white/25 hover:bg-white/[0.08] rounded-full px-6 h-11 text-[14px] font-medium transition"
-            >
-              Contacto →
-            </MagneticButton>
-
-            <div className="inline-flex items-center gap-2 pl-2 text-xs font-mono text-white/40">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.7)]" />
-              DISPONIBLE PARA PROYECTOS
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Visual panel */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, x: 20 }}
-          animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="hidden md:block relative w-[320px] h-[400px]"
-        >
-          <div className="absolute inset-0 rounded-[24px] border border-white/[0.08] bg-gradient-to-br from-[#111114] to-[#0a0a0c] overflow-hidden glow-lime">
-            {/* corner marks */}
-            <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-[#a3e635]/60" />
-            <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-[#a3e635]/60" />
-            <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-[#a3e635]/60" />
-            <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-[#a3e635]/60" />
-
-            {/* scanline */}
-            <motion.div
-              animate={{ y: [0, 380, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#a3e635]/60 to-transparent"
-            />
-
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(circle at 50% 40%, rgba(163,230,53,0.25) 0%, transparent 60%)",
-              }}
-            />
-
-            <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
-              <div
-                className="w-24 h-24 rounded-full border-[1.5px] border-[#a3e635]/45 flex items-center justify-center mb-4"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(163,230,53,0.2), transparent 65%)",
-                }}
-              >
-                <motion.div
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                  className="font-mono text-4xl text-[#c4f060] font-medium"
-                >
-                  A/
-                </motion.div>
-              </div>
-              <p className="font-mono text-[11px] tracking-[0.18em] text-white/40 uppercase">
-                Juan Alcántar
-              </p>
-              <p className="font-mono text-[10px] tracking-[0.14em] text-[#a3e635]/70 mt-1">
-                AI · BUILDER · FOUNDER
-              </p>
-            </div>
-
-            {/* grid */}
-            <div
-              className="absolute inset-0 opacity-40"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(163,230,53,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(163,230,53,0.06) 1px, transparent 1px)",
-                backgroundSize: "24px 24px",
-              }}
-            />
+    <div className="w-full aspect-[16/10] relative rounded-xl border border-[#2c2c2c] overflow-hidden bg-[#1e1e1e]/40 shadow-lg select-none">
+      {!imgFailed ? (
+        <Image 
+          src={src} 
+          alt={alt} 
+          fill 
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+          onError={() => setImgFailed(true)}
+          priority={id === "moodlesync"}
+        />
+      ) : (
+        <div className={`absolute inset-0 bg-gradient-to-br ${fallbackColor} flex flex-col items-center justify-center p-6 text-center select-none`}>
+          <div className="absolute top-3 right-3 text-[10px] font-mono text-[#9b9b9b]/35 uppercase tracking-widest">
+            Mockup temporal
           </div>
-
-          {/* floating badges */}
-          <motion.div
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 4, repeat: Infinity }}
-            className="absolute -left-6 top-10 bg-[#111114]/90 backdrop-blur border border-white/10 rounded-xl px-3 py-2 text-[11px] font-mono text-white/70"
-          >
-            <span className="text-[#a3e635]">→</span> Next.js 16
-          </motion.div>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
-            className="absolute -right-4 top-1/3 bg-[#111114]/90 backdrop-blur border border-white/10 rounded-xl px-3 py-2 text-[11px] font-mono text-white/70"
-          >
-            <span className="text-[#a3e635]">✦</span> n8n + Claude
-          </motion.div>
-          <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 6, repeat: Infinity, delay: 1 }}
-            className="absolute -left-4 bottom-8 bg-[#111114]/90 backdrop-blur border border-white/10 rounded-xl px-3 py-2 text-[11px] font-mono text-white/70"
-          >
-            <span className="text-[#a3e635]">⌘</span> TypeScript
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Scroll cue */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="w-5 h-9 border border-white/15 rounded-full flex items-start justify-center pt-1.5"
-        >
-          <div className="w-1 h-1.5 bg-white/50 rounded-full" />
-        </motion.div>
-      </motion.div>
-    </section>
+          <div className="w-14 h-14 rounded-2xl bg-[#222222]/85 border border-[#2c2c2c] flex items-center justify-center mb-4 shadow-inner">
+            {icon}
+          </div>
+          <h4 className="text-white font-semibold text-[17px] tracking-tight mb-1">{alt}</h4>
+          <p className="text-[#9b9b9b] text-xs font-mono max-w-xs leading-normal">
+            Imágenes profesionales próximamente. Automatización diseñada por ONYX.
+          </p>
+          
+          <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[9px] font-mono text-[#9b9b9b]/25">
+            <span>ID: {id.toUpperCase()}</span>
+            <span>SYSTEM STATUS: ACTIVE</span>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
-/* ─────────────────────── STATS ─────────────────────── */
-function Stats() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+export default function Home() {
+  const [copied, setCopied] = useState(false);
 
-  const stats = [
-    { v: "Jalisco", l: "Ciudad Guzmán · Home base" },
-    { v: "1ª gen", l: "AI Engineering · ITCG" },
-    { v: "Full-stack", l: "De diseño a deploy" },
-    { v: "2026", l: "ONYX Inc. fundada" },
-  ];
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText("https://byalcantar.me");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <section
-      ref={ref}
-      className="border-y border-white/[0.05] py-14 px-6 bg-[#080809]"
-    >
-      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6">
-        {stats.map((s, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 18 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: i * 0.08 + 0.1, duration: 0.6 }}
-          >
-            <p className="font-display text-4xl md:text-5xl font-bold text-white mb-1 tracking-tight">
-              {s.v}
-            </p>
-            <p className="text-white/40 text-xs md:text-sm font-mono uppercase tracking-wider">
-              {s.l}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  );
-}
+    <main className="min-h-screen bg-[#191919] text-[#f7facf] font-sans flex flex-col md:flex-row">
+      
+      {/* ──────────────────────────────────────────────────────── */}
+      {/* LEFT COLUMN: SIDEBAR */}
+      {/* ──────────────────────────────────────────────────────── */}
+      {/* LEFT COLUMN: SIDEBAR */}
+      <Sidebar />
 
-/* ─────────────────── FEATURED PROJECT ─────────────────── */
-function FeaturedProject() {
-  return (
-    <section className="relative py-28 px-6">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex items-end justify-between mb-12 flex-wrap gap-4"
-        >
-          <div>
-            <SectionLabel>Proyecto destacado</SectionLabel>
-            <h2 className="font-display text-4xl md:text-6xl font-bold text-white tracking-tight">
-              MoodleSync
-            </h2>
+      {/* ──────────────────────────────────────────────────────── */}
+      {/* RIGHT COLUMN: MAIN CONTENT (Scrollable) */}
+      {/* ──────────────────────────────────────────────────────── */}
+      <div className="flex-1 flex flex-col min-w-0">
+        
+        {/* Status Bar Banner */}
+        <div className="bg-[#a3e635] text-black text-[11px] font-mono tracking-widest font-semibold text-center py-2 uppercase border-b border-[#2c2c2c]">
+          Disponible para proyectos · Automatizando desde Jalisco
+        </div>
+
+        {/* Top Local Bar (Breadcrumb & Copy Link) */}
+        <header className="flex items-center justify-between border-b border-[#2c2c2c] px-6 py-4 sticky top-0 bg-[#191919]/90 backdrop-blur z-10">
+          <div className="flex items-center gap-2 text-[13px] font-mono text-white/90">
+            <HomeIcon size={14} className="text-[#a3e635]" />
+            <span>Home</span>
           </div>
-          <Link
-            href="/projects"
-            className="text-[13px] text-white/50 hover:text-[#a3e635] font-mono inline-flex items-center gap-1 transition"
+          <button
+            onClick={handleCopyLink}
+            className="flex items-center gap-1.5 text-[12px] font-mono text-[#9b9b9b] hover:text-white transition border border-[#2c2c2c] rounded px-3 py-1 bg-[#222222]/40"
           >
-            Ver todos los proyectos <ArrowUpRight size={14} />
-          </Link>
-        </motion.div>
+            {copied ? (
+              <>
+                <Check size={12} className="text-[#a3e635]" />
+                <span className="text-white">Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy size={12} />
+                <span>Copy link</span>
+              </>
+            )}
+          </button>
+        </header>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8 }}
-          whileHover={{ y: -4 }}
-          className="relative bg-gradient-to-br from-[#111114] to-[#0a0a0c] border border-white/[0.08] hover:border-[#a3e635]/30 rounded-3xl overflow-hidden transition-all group"
-        >
-          <div className="absolute -top-32 right-0 w-[400px] h-[400px] bg-[#a3e635]/[0.08] rounded-full blur-3xl pointer-events-none" />
-
-          <div className="grid md:grid-cols-[1fr_1.2fr]">
-            <div className="p-10 md:p-14 relative">
-              <div className="inline-flex items-center gap-2 bg-[#a3e635]/10 border border-[#a3e635]/25 rounded-full px-3 py-1 mb-6">
-                <GraduationCap size={13} className="text-[#a3e635]" />
-                <span className="font-mono text-[11px] tracking-wider uppercase text-[#c4f060]">
-                  SaaS Educativo
-                </span>
-              </div>
-
-              <h3 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">
-                El OS del estudiante ITCG
-              </h3>
-              <p className="text-white/55 text-sm leading-relaxed mb-8">
-                Convierte el portal Moodle del TecNM Ciudad Guzmán en una
-                experiencia moderna. Tareas, horario, calificaciones y
-                notificaciones — todo en un lugar, sincronizado automáticamente.
-              </p>
-
-              <ul className="space-y-2.5 mb-8 text-sm text-white/65">
-                {[
-                  "Sincroniza tareas, horario y calificaciones",
-                  "Tablero Kanban drag-and-drop",
-                  "Export .ics a Google/Apple Calendar",
-                  "Tablero de notas tipo canvas",
-                  "Entrega de PDFs directo a Moodle",
-                ].map((x) => (
-                  <li key={x} className="flex items-center gap-3">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#a3e635] shadow-[0_0_6px_rgba(163,230,53,0.6)]" />
-                    {x}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href="https://moodlesync.onyxinc.dev"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#a3e635] text-black hover:bg-[#b8f069] rounded-full px-5 h-10 text-[13px] font-semibold transition"
-                >
-                  Ver en vivo <ArrowUpRight size={14} />
-                </a>
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 hover:border-white/25 text-white rounded-full px-5 h-10 text-[13px] font-medium transition"
-                >
-                  Case study
-                </Link>
-              </div>
-            </div>
-
-            {/* Mockup preview */}
-            <div className="relative bg-[#0a0a0c] border-l border-white/[0.06] p-8 md:p-10 flex items-center justify-center overflow-hidden min-h-[380px]">
-              <div className="absolute inset-0 opacity-30">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(rgba(163,230,53,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(163,230,53,0.04) 1px, transparent 1px)",
-                    backgroundSize: "32px 32px",
-                  }}
+        {/* Inner Content Padding */}
+        <div className="p-6 md:p-8 lg:p-10 space-y-12 max-w-3xl">
+          
+          {/* Hero Bio - Firdaus Style */}
+          <section className="space-y-6">
+            <div className="flex items-center gap-6">
+              
+              {/* Large Circular Avatar */}
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full border border-[#2c2c2c] bg-[#222222] overflow-hidden relative shadow-lg shrink-0">
+                <Image 
+                  src="/avatar_juan.png"
+                  alt="Juan Alcántar"
+                  fill
+                  className="object-contain"
+                  priority
                 />
               </div>
 
-              <div className="relative w-full max-w-sm bg-[#0f0f12] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
-                <div className="flex items-center gap-1.5 px-4 py-3 border-b border-white/5 bg-[#141417]">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-                  <div className="ml-3 font-mono text-[10px] text-white/40">
-                    moodlesync.onyxinc.dev
-                  </div>
+              {/* Title / Name & Role */}
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5">
+                  <h1 className="text-[24px] md:text-[28px] font-bold text-white tracking-tight leading-none font-sans">
+                    Juan Alcántar
+                  </h1>
+                  {/* Verified Badge Check */}
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-blue-500 fill-current shrink-0" aria-label="Verified Profile">
+                    <path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.7 3.1 5.51l.34 3.69L1 12l2.44 2.79-.34 3.69 3.61.82 1.89 3.2L12 21.04l3.4 1.46 1.89-3.2 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z" />
+                  </svg>
                 </div>
-                <div className="p-5 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="h-3 w-24 rounded bg-white/10 mb-1.5" />
-                      <div className="h-2 w-16 rounded bg-white/5" />
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-[#a3e635]/20 border border-[#a3e635]/30" />
-                  </div>
+                <p className="text-[14px] md:text-[15px] font-mono text-[#9b9b9b]">
+                  Estudiante de Ingeniería de IA
+                </p>
+              </div>
+            </div>
 
-                  {[72, 55, 85].map((w, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${w}%` }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.3 + i * 0.1, duration: 1 }}
-                      className="relative bg-[#16161a] rounded-lg p-3 border border-white/5"
-                    >
-                      <div className="h-2 w-2/3 bg-white/10 rounded mb-2" />
-                      <div className="h-1.5 w-1/2 bg-[#a3e635]/30 rounded" />
-                    </motion.div>
-                  ))}
+            {/* Tagline */}
+            <p className="text-[14px] text-white/80 font-sans leading-relaxed">
+              Bienvenido a mi pequeño rincón de la web.
+            </p>
 
-                  <div className="grid grid-cols-3 gap-2 pt-2">
-                    {[1, 2, 3].map((i) => (
-                      <div
-                        key={i}
-                        className="h-16 rounded-lg bg-gradient-to-br from-[#16161a] to-[#0f0f12] border border-white/5 flex items-end p-2"
-                      >
-                        <div className="h-1.5 w-full bg-[#a3e635]/40 rounded" />
+            {/* Divider */}
+            <div className="h-px bg-[#2c2c2c]" />
+
+            {/* Metadata Grid (Firdaus Style) */}
+            <div className="space-y-3">
+              {/* Full-width Items */}
+              <div className="flex items-center gap-3">
+                <div className="w-7 h-7 rounded bg-[#222222] border border-[#2c2c2c] flex items-center justify-center text-[#9b9b9b] shrink-0">
+                  <Code2 size={13} />
+                </div>
+                <span className="font-mono text-[12.5px] text-[#f5f5f7] tracking-tight">
+                  Estudiante de Ingeniería de IA
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-7 h-7 rounded bg-[#222222] border border-[#2c2c2c] flex items-center justify-center text-[#9b9b9b] shrink-0">
+                  <Briefcase size={13} />
+                </div>
+                <span className="font-mono text-[12.5px] text-[#f5f5f7] tracking-tight">
+                  Fundador @ONYX Inc. & Creador de MoodleSync
+                </span>
+              </div>
+
+              {/* Split 2-Column Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 pt-1">
+                {/* Column 1 */}
+                <div className="space-y-3">
+                  {[
+                    { icon: <MapPin size={13} />, text: "Ciudad Guzmán, Jalisco, México" },
+                    { icon: <Phone size={13} />, text: "+52 334 086 5087" },
+                    { icon: <LinkIcon size={13} />, text: "www.byalcantar.me" }
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded bg-[#222222] border border-[#2c2c2c] flex items-center justify-center text-[#9b9b9b] shrink-0">
+                        {item.icon}
                       </div>
-                    ))}
-                  </div>
+                      <span className="font-mono text-[12.5px] text-[#f5f5f7] tracking-tight truncate">
+                        {item.text}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Column 2 */}
+                <div className="space-y-3">
+                  {[
+                    { icon: <Clock size={13} />, text: <LocalTime /> },
+                    { icon: <Mail size={13} />, text: "founder@onyxinc.dev" },
+                    { 
+                      icon: (
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-[#9b9b9b]">
+                          <circle cx="10" cy="14" r="5"/>
+                          <path d="M14 10l6-6M20 10V4h-6"/>
+                        </svg>
+                      ), 
+                      text: "él/él" 
+                    }
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded bg-[#222222] border border-[#2c2c2c] flex items-center justify-center text-[#9b9b9b] shrink-0">
+                        {item.icon}
+                      </div>
+                      <span className="font-mono text-[12.5px] text-[#f5f5f7] tracking-tight truncate">
+                        {item.text}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
 
-/* ─────────────────── ONYX PREVIEW ─────────────────── */
-function OnyxPreview() {
-  return (
-    <section className="relative py-28 px-6">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8 }}
-          className="relative bg-gradient-to-br from-[#0f0f12] to-[#080809] border border-white/[0.08] rounded-3xl overflow-hidden"
-        >
-          <div className="absolute top-[-120px] left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[#a3e635]/[0.07] rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
+          </section>
 
-          <div className="relative text-center px-8 md:px-16 py-20 md:py-24">
-            <motion.div
-              initial={{ letterSpacing: "0.15em", opacity: 0 }}
-              whileInView={{ letterSpacing: "0.28em", opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.4 }}
-              className="font-mono text-4xl md:text-6xl text-white mb-4"
-              style={{ textShadow: "0 0 40px rgba(163,230,53,0.2)" }}
-            >
-              ONYX
-            </motion.div>
-            <p className="text-white/50 text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-10">
-              Mi empresa. Entregamos soluciones digitales con IA real — sitios,
-              automatizaciones y herramientas — para PyMEs que quieren crecer
-              sin contratar un equipo técnico interno.
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Link
-                href="/onyx"
-                className="inline-flex items-center gap-2 bg-white text-black hover:bg-white/90 rounded-full px-6 h-11 text-[13px] font-semibold transition"
-              >
-                Conocer ONYX Inc. <ArrowUpRight size={14} />
-              </Link>
-              <a
-                href="https://onyxinc.dev"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 hover:border-white/25 text-white rounded-full px-6 h-11 text-[13px] font-medium transition"
-              >
-                Sitio oficial →
-              </a>
+          {/* Trayectoria / Experience */}
+          <section className="space-y-4">
+            <h2 className="text-[12px] font-mono uppercase tracking-[0.2em] text-[#9b9b9b]/60 font-semibold">
+              Trayectoria / Experience
+            </h2>
+            
+            <div className="border border-[#2c2c2c] rounded-xl overflow-hidden bg-[#1e1e1e]/40 divide-y divide-[#2c2c2c]">
+              {experience.map((item) => {
+                return (
+                  <div
+                    key={item.id}
+                    className="p-4 flex items-center justify-between transition group"
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      
+                      {/* Brand Logo Image */}
+                      <div className="w-8 h-8 rounded-full overflow-hidden relative bg-[#222222] border border-[#2c2c2c] flex items-center justify-center shrink-0 shadow-inner">
+                        <Image
+                          src={item.logo}
+                          alt={`${item.company} Logo`}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+
+                      {/* Info strings */}
+                      <div className="min-w-0 flex flex-wrap items-baseline gap-1 text-[14px]">
+                        <span className="text-white font-medium truncate">{item.company}</span>
+                        <span className="text-[#9b9b9b]/50 shrink-0">/</span>
+                        <span className="text-[#9b9b9b] truncate">{item.role}</span>
+                      </div>
+
+                    </div>
+
+                    <div className="flex items-center gap-2 text-[13px] font-mono text-[#9b9b9b]/80 shrink-0">
+                      <span>{item.period}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Github Contributions */}
+          <section className="pt-4 border-t border-[#2c2c2c]/40">
+            <GithubContributions />
+          </section>
+
+          {/* Proyectos / Portfolio Section (ggkim style) */}
+          <section className="space-y-12 pt-8 border-t border-[#2c2c2c]/40">
+            <div className="flex items-center justify-between text-[11px] font-mono text-[#9b9b9b]/50 uppercase tracking-wider">
+              <span>Proyectos Destacados</span>
+              <span>Total: {projects.length}</span>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-4 mt-14 text-left">
-              {[
-                { icon: <Zap size={16} />, t: "Automatización", d: "WhatsApp bots, n8n, IA que trabaja 24/7" },
-                { icon: <Code2 size={16} />, t: "Desarrollo", d: "Sitios y apps a medida con stack moderno" },
-                { icon: <Brain size={16} />, t: "IA aplicada", d: "LLMs integrados en procesos reales" },
-              ].map((x, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
-                  className="bg-white/[0.03] border border-white/[0.07] rounded-xl p-5"
+            <div className="space-y-16">
+              {projects.map((proj) => (
+                <div 
+                  key={proj.id} 
+                  id={`project-${proj.id}`}
+                  className="scroll-mt-24"
                 >
-                  <div className="text-[#a3e635] mb-3">{x.icon}</div>
-                  <p className="text-white font-semibold text-sm mb-1.5">{x.t}</p>
-                  <p className="text-white/45 text-xs leading-relaxed">{x.d}</p>
-                </motion.div>
+                  <Link href={`/projects/${proj.id}`} className="block space-y-4 group/card">
+                    <div className="space-y-1">
+                      <span className="text-[11px] font-mono text-[#a3e635]/65 group-hover/card:text-[#a3e635] uppercase tracking-widest font-semibold transition-colors">
+                        {proj.subtitle}
+                      </span>
+                      <h3 className="text-[22px] md:text-[26px] font-bold text-white group-hover/card:text-[#a3e635] tracking-tight leading-snug font-sans transition-colors flex items-center gap-1.5">
+                        <span>{proj.title}</span>
+                        <ArrowUpRight size={18} className="opacity-0 -translate-y-0.5 translate-x-0 group-hover/card:opacity-100 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-1 transition-all duration-300" />
+                      </h3>
+                    </div>
+                    
+                    <p className="text-[14px] md:text-[15px] text-[#9b9b9b] group-hover/card:text-white/90 leading-relaxed font-sans max-w-2xl transition-colors">
+                      {proj.desc}
+                    </p>
+
+                    {/* Project Image Container */}
+                    <ProjectImage 
+                      src={proj.image} 
+                      alt={proj.title} 
+                      fallbackColor={proj.fallbackColor}
+                      icon={proj.icon}
+                      id={proj.id}
+                    />
+                  </Link>
+                </div>
               ))}
             </div>
-          </div>
-        </motion.div>
+          </section>
+
+        </div>
       </div>
-    </section>
-  );
-}
 
-/* ─────────────────── CTA / CONTACT ─────────────────── */
-function FinalCTA() {
-  return (
-    <section className="relative py-32 px-6 overflow-hidden">
-      <AmbientGlow />
-      <div className="max-w-4xl mx-auto text-center relative">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <SectionLabel>Trabajemos juntos</SectionLabel>
-          <h2 className="font-display text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.02] mb-8">
-            ¿Tienes algo{" "}
-            <em className="text-[#a3e635] font-display italic">ambicioso</em>
-            <br />en mente?
-          </h2>
-          <p className="text-white/50 text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-            Colaboro en proyectos donde el reto importa más que el cheque.
-            Si estás construyendo algo que no existe, hablemos.
-          </p>
-
-          <div className="flex flex-wrap gap-3 justify-center items-center">
-            <MagneticButton
-              href="mailto:hola@byalcantar.me"
-              className="inline-flex items-center gap-2 bg-[#a3e635] text-black hover:bg-[#b8f069] rounded-full px-7 h-12 text-[14px] font-semibold shadow-[0_0_32px_rgba(163,230,53,0.4)] transition"
-            >
-              <Mail size={16} /> hola@byalcantar.me
-            </MagneticButton>
-          </div>
-
-          <div className="flex justify-center gap-5 mt-10">
-            {[
-              { i: <Github size={18} />, h: "https://github.com/AlcantarIGOR", l: "GitHub" },
-              { i: <Instagram size={18} />, h: "https://www.instagram.com/byalcantar", l: "Instagram" },
-            ].map((x) => (
-              <a
-                key={x.l}
-                href={x.h}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={x.l}
-                className="w-11 h-11 rounded-full border border-white/10 hover:border-[#a3e635]/40 hover:text-[#a3e635] text-white/60 flex items-center justify-center transition"
-              >
-                {x.i}
-              </a>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ─────────────────── PAGE ─────────────────── */
-export default function Home() {
-  return (
-    <main className="bg-[#080809] min-h-screen text-white overflow-x-hidden">
-      <Navbar />
-      <Hero />
-      <Stats />
-      <FeaturedProject />
-      <OnyxPreview />
-      <FinalCTA />
-      <Footer />
     </main>
   );
 }

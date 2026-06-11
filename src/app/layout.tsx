@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { DM_Sans, DM_Mono, Playfair_Display } from "next/font/google";
+import PageLoader from "@/components/PageLoader";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -82,8 +83,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" className="dark">
       <body className={`${dmSans.variable} ${dmMono.variable} ${playfair.variable}`}>
+        <PageLoader />
         {children}
         <Analytics />
       </body>

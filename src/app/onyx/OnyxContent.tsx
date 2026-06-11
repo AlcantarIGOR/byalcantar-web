@@ -1,366 +1,327 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
 import Link from "next/link";
-import {
+import { 
+  Home as HomeIcon, 
+  Copy, 
+  Check, 
   ArrowUpRight,
   Globe2,
   Bot,
   Cpu,
   MessageSquare,
-  Zap,
-  HandshakeIcon,
   MapPin,
-  Sparkles,
-  Target,
+  Zap,
   ShieldCheck,
+  HandshakeIcon,
+  Target
 } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { SectionLabel } from "@/components/SectionLabel";
-import { HeroBackground, AmbientGlow } from "@/components/Background";
+import Sidebar from "@/components/Sidebar";
 
-const services = [
-  {
-    icon: <Globe2 size={22} />,
-    t: "Sitios web con IA integrada",
-    d: "Landings que convierten + chat inteligente que califica leads. Next.js + Vercel + LLM en la capa de contacto.",
-  },
-  {
-    icon: <Bot size={22} />,
-    t: "Bots de WhatsApp",
-    d: "Asistentes 24/7 que responden FAQ, agendan citas y cierran ventas. n8n + Evolution API + Claude/Ollama.",
-  },
-  {
-    icon: <Cpu size={22} />,
-    t: "Automatizaciones",
-    d: "Flujos que quitan trabajo repetitivo: reportes automáticos, alertas, seguimiento a clientes sin tocar un botón.",
-  },
-  {
-    icon: <MessageSquare size={22} />,
-    t: "Asistentes de negocio",
-    d: "Agente que conoce tu negocio y atiende como si fuera tú — pero nunca duerme, nunca se olvida, nunca tarda.",
-  },
-];
+export default function OnyxContent() {
+  const [copied, setCopied] = useState(false);
 
-const differentiators = [
-  {
-    icon: <MapPin size={20} />,
-    t: "Cercanía local",
-    d: "Estamos en Ciudad Guzmán. No somos agencia de CDMX cobrando en dólares. Entendemos el contexto PyMEs en Jalisco.",
-  },
-  {
-    icon: <Zap size={20} />,
-    t: "IA aplicada real",
-    d: "No es marketing. LLMs trabajando dentro de procesos de negocio. Resultados medibles, no buzzwords.",
-  },
-  {
-    icon: <ShieldCheck size={20} />,
-    t: "Servicio gestionado",
-    d: "No tienes que aprender nada técnico. Implementamos, operamos y mantenemos. Tú vendes, nosotros resolvemos.",
-  },
-  {
-    icon: <HandshakeIcon size={20} />,
-    t: "Founder visible",
-    d: "Trabajas directo con @byalcantar — no con un account manager. Decisiones rápidas, ejecución directa.",
-  },
-];
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText("https://byalcantar.me/onyx");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-const process = [
-  {
-    n: "01",
-    t: "Diagnóstico",
-    d: "Llamada gratuita · 30 min. Mapeamos qué tareas te roban tiempo y cuáles podemos automatizar hoy.",
-  },
-  {
-    n: "02",
-    t: "Diseño",
-    d: "Te entregamos plan con alcance claro, precio fijo y tiempo estimado. Sin sorpresas ni hora-hombre infladas.",
-  },
-  {
-    n: "03",
-    t: "Construcción",
-    d: "Implementamos. Setup típico: 3 a 10 días. Te vemos pruebas reales antes de soltar a producción.",
-  },
-  {
-    n: "04",
-    t: "ONYX Care",
-    d: "Mantenimiento mensual opcional. Nos aseguramos que lo que construimos siga vivo — y mejorando — con el tiempo.",
-  },
-];
+  const services = [
+    {
+      icon: <Globe2 size={16} />,
+      t: "Páginas web inteligentes",
+      d: "Sitios web profesionales con un chat de atención integrado que responde preguntas de tus servicios, califica el interés de tus visitas y agenda contactos calificados automáticamente."
+    },
+    {
+      icon: <Bot size={16} />,
+      t: "Asistentes en WhatsApp",
+      d: "Sistemas de respuesta automática que atienden a tus clientes las 24 horas del día. Resuelven dudas comunes, agendan citas en tu calendario de forma directa y facilitan tus ventas por chat."
+    },
+    {
+      icon: <Cpu size={16} />,
+      t: "Automatización de tareas",
+      d: "Conexiones que eliminan el trabajo repetitivo del día a día: envío automático de alertas de confirmación a tus clientes, generación de reportes automáticos y sincronización de bases de datos."
+    },
+    {
+      icon: <MessageSquare size={16} />,
+      t: "Asistentes virtuales de negocio",
+      d: "Agentes digitales entrenados exclusivamente con la información de tu negocio para atender dudas especializadas y guiar a tus clientes, asegurando respuestas inmediatas y precisas."
+    }
+  ];
 
-export default function OnyxPage() {
+  const differentiators = [
+    {
+      icon: <MapPin size={16} />,
+      t: "Cercanía local",
+      d: "Estoy en Ciudad Guzmán. Trabajo de cerca con los negocios de la región, entendiendo de primera mano las necesidades operativas de las PyMEs en Jalisco."
+    },
+    {
+      icon: <Zap size={16} />,
+      t: "Tecnología útil y medible",
+      d: "No te vendo ideas abstractas. Diseño e instalo herramientas prácticas diseñadas para ahorrar tiempo real en tus tareas diarias y mejorar tu atención al cliente."
+    },
+    {
+      icon: <ShieldCheck size={16} />,
+      t: "Servicio gestionado completo",
+      d: "No necesitas aprender programación ni configurar sistemas. Yo me encargo de construir, mantener y actualizar todo. Tú te enfocas en vender, yo en la tecnología."
+    },
+    {
+      icon: <HandshakeIcon size={16} />,
+      t: "Trato directo y transparente",
+      d: "Trabajas directamente con el fundador. Sin intermediarios, sin demoras de agencias tradicionales y con respuestas y modificaciones rápidas ante cualquier cambio en tu negocio."
+    }
+  ];
+
+  const processSteps = [
+    {
+      n: "01",
+      t: "Diagnóstico",
+      d: "Llamada gratuita · 30 min. Mapeo qué tareas te roban tiempo y cuáles podemos automatizar hoy."
+    },
+    {
+      n: "02",
+      t: "Diseño",
+      d: "Te entrego un plan con alcance claro, precio fijo y tiempo estimado. Sin sorpresas ni cobros sorpresa."
+    },
+    {
+      n: "03",
+      t: "Construcción",
+      d: "Implemento el sistema. Tiempo estimado: 3 a 10 días. Realizo pruebas contigo antes de activarlo públicamente."
+    },
+    {
+      n: "04",
+      t: "ONYX Care",
+      d: "Mantenimiento mensual opcional. Me aseguro que lo que construyo siga activo — y mejorando — con el tiempo."
+    }
+  ];
+
   return (
-    <main className="bg-[#080809] min-h-screen text-white overflow-x-hidden">
-      <Navbar />
+    <main className="min-h-screen bg-[#191919] text-[#f7facf] font-sans flex flex-col md:flex-row">
+      
+      {/* LEFT COLUMN: SIDEBAR */}
+      <Sidebar />
 
-      {/* Hero */}
-      <section className="relative pt-40 pb-24 px-6 overflow-hidden">
-        <HeroBackground />
-        <div className="max-w-6xl mx-auto relative z-10">
-          <div className="text-center">
-            <SectionLabel>My company</SectionLabel>
-            <motion.div
-              initial={{ letterSpacing: "0.1em", opacity: 0 }}
-              animate={{ letterSpacing: "0.28em", opacity: 1 }}
-              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="font-mono font-medium text-white text-[clamp(56px,10vw,120px)] mb-4 mx-auto"
-              style={{ textShadow: "0 0 60px rgba(163,230,53,0.25)" }}
-            >
-              ONYX
-            </motion.div>
+      {/* RIGHT COLUMN: CONTENT */}
+      <div className="flex-1 flex flex-col min-w-0 md:h-screen md:overflow-y-auto bg-[#191919]">
+        
+        {/* Status Bar Banner */}
+        <div className="bg-[#a3e635] text-black text-[11px] font-mono tracking-widest font-semibold text-center py-2 uppercase border-b border-[#2c2c2c] shrink-0">
+          Disponible para proyectos · Automatizando desde Jalisco
+        </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-white/60 text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed mb-10"
-            >
-              La empresa de IA aplicada que fundé para ayudar a negocios locales a
-              crecer sin necesidad de un equipo técnico interno.
-            </motion.p>
+        {/* Top Local Navigation Bar */}
+        <header className="flex items-center justify-between border-b border-[#2c2c2c] px-6 py-4 sticky top-0 bg-[#191919]/90 backdrop-blur z-10 shrink-0">
+          <div className="flex items-center gap-2 text-[13px] font-mono text-white/90">
+            <Link href="/" className="hover:text-white transition flex items-center gap-1.5">
+              <HomeIcon size={14} className="text-[#a3e635]" />
+              <span>Home</span>
+            </Link>
+            <span className="text-white/30">/</span>
+            <span className="text-[#9b9b9b]">ONYX</span>
+          </div>
+          <button
+            onClick={handleCopyLink}
+            className="flex items-center gap-1.5 text-[12px] font-mono text-[#9b9b9b] hover:text-white transition border border-[#2c2c2c] rounded px-3 py-1 bg-[#222222]/40"
+          >
+            {copied ? (
+              <>
+                <Check size={12} className="text-[#a3e635]" />
+                <span className="text-white">Copied!</span>
+              </>
+            ) : (
+              <>
+                <Copy size={12} />
+                <span>Copy link</span>
+              </>
+            )}
+          </button>
+        </header>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="flex flex-wrap justify-center gap-3"
-            >
+        {/* Scrollable ONYX Content */}
+        <div className="flex-1 p-6 md:p-12 lg:p-16 max-w-4xl space-y-16">
+          
+          {/* Hero Bio */}
+          <section className="space-y-6">
+            <div className="space-y-2">
+              <span className="text-[11px] font-mono text-[#a3e635] uppercase tracking-widest block font-semibold">
+                MY COMPANY
+              </span>
+              <h1 className="text-[44px] md:text-[56px] font-mono font-medium text-white tracking-[0.25em] leading-none">
+                ONYX
+              </h1>
+            </div>
+
+            <p className="text-[15px] text-white/80 leading-relaxed font-sans max-w-3xl">
+              La empresa de IA aplicada que fundé para ayudar a negocios locales a crecer sin necesidad de un equipo técnico interno.
+            </p>
+
+            <div className="flex flex-wrap gap-3 pt-2">
               <a
                 href="https://onyxinc.dev"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-white text-black hover:bg-white/90 rounded-full px-7 h-12 text-[14px] font-semibold transition"
+                className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-black bg-white hover:bg-white/90 transition rounded-lg px-4 py-2.5"
               >
-                Sitio oficial de ONYX <ArrowUpRight size={15} />
+                <span>Sitio oficial de ONYX</span>
+                <ArrowUpRight size={13} />
               </a>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 bg-white/[0.04] border border-white/10 hover:border-white/25 text-white rounded-full px-7 h-12 text-[14px] font-medium transition"
+              <a
+                href="mailto:founder@onyxinc.dev"
+                className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-white hover:text-[#a3e635] transition border border-[#2c2c2c] rounded-lg px-4 py-2.5 bg-[#222222]/40"
               >
-                Cotizar proyecto
-              </Link>
-            </motion.div>
+                <span>Cotizar proyecto</span>
+                <ArrowUpRight size={13} className="opacity-60" />
+              </a>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9 }}
-              className="mt-14 inline-flex items-center gap-2 font-mono text-xs text-white/35 tracking-widest"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.6)]" />
-              OPERANDO DESDE 2026 · CIUDAD GUZMÁN, JALISCO
-            </motion.div>
-          </div>
-        </div>
-      </section>
+            <div className="pt-4 flex items-center gap-2 font-mono text-[10px] text-[#9b9b9b]/55 tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>OPERANDO DESDE 2026 · CIUDAD GUZMÁN, JALISCO</span>
+            </div>
+          </section>
 
-      {/* Proposal */}
-      <section className="relative px-6 py-20 border-t border-white/[0.05]">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="grid md:grid-cols-[1fr_1.5fr] gap-10 md:gap-16"
-          >
-            <div>
-              <SectionLabel>Propuesta de valor</SectionLabel>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-white tracking-tight leading-[1.1]">
-                Tu negocio merece trabajar con{" "}
-                <span className="text-gradient-lime">tecnología real</span>.
+          {/* Propuesta de Valor Section */}
+          <section className="space-y-4 pt-6 border-t border-[#2c2c2c]/40">
+            <span className="text-[11px] font-mono text-[#9b9b9b]/50 uppercase tracking-widest block font-semibold">
+              Propuesta de valor
+            </span>
+            <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1.8fr] gap-8 items-start pt-2">
+              <h2 className="text-[20px] font-sans font-bold text-white tracking-tight leading-snug">
+                Tu negocio merece trabajar con <span className="text-[#a3e635]">tecnología real</span>.
               </h2>
-            </div>
-            <div className="space-y-5 text-white/60 text-[16px] leading-[1.75]">
-              <p>
-                La mayoría de agencias te venden una landing bonita que no hace
-                nada. ONYX te entrega <span className="text-white">sistemas</span>:
-                cosas que responden, agendan, cobran y reportan — mientras tú te
-                dedicas a vender.
-              </p>
-              <p>
-                No es SaaS. No es autoservicio. Es{" "}
-                <span className="text-white">servicio gestionado</span>:
-                implementamos, configuramos y mantenemos. El cliente recibe
-                resultados, no herramientas.
-              </p>
-              <p>
-                Arrancamos en Ciudad Guzmán con dueños de gimnasios, barberías,
-                y negocios locales con atención al cliente repetitiva. De ahí
-                escalamos a PyMEs en todo Jalisco — y eventualmente LATAM.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Services */}
-      <section className="relative px-6 py-24">
-        <AmbientGlow />
-        <div className="max-w-6xl mx-auto relative">
-          <div className="mb-14">
-            <SectionLabel>Servicios</SectionLabel>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-white tracking-tight">
-              Qué construimos para nuestros clientes.
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-5">
-            {services.map((s, i) => (
-              <motion.div
-                key={s.t}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -4 }}
-                className="relative bg-[#111114] border border-white/[0.07] hover:border-[#a3e635]/25 rounded-2xl p-7 transition-all group overflow-hidden"
-              >
-                <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#a3e635]/[0.05] rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition" />
-                <div className="relative">
-                  <div className="w-12 h-12 rounded-xl bg-[#a3e635]/10 border border-[#a3e635]/20 text-[#a3e635] flex items-center justify-center mb-5">
-                    {s.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{s.t}</h3>
-                  <p className="text-white/55 text-[14px] leading-relaxed">{s.d}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Differentiators */}
-      <section className="px-6 py-24 border-t border-white/[0.05]">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-14">
-            <SectionLabel>Diferenciadores</SectionLabel>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-white tracking-tight">
-              Por qué <span className="text-gradient-lime">ONYX</span>, no otra agencia.
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            {differentiators.map((d, i) => (
-              <motion.div
-                key={d.t}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="flex gap-5 bg-[#0a0a0c] border border-white/[0.06] rounded-2xl p-6 hover:border-[#a3e635]/20 transition"
-              >
-                <div className="w-11 h-11 rounded-xl bg-[#a3e635]/10 border border-[#a3e635]/20 text-[#a3e635] flex items-center justify-center flex-shrink-0">
-                  {d.icon}
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold text-lg mb-1.5">{d.t}</h3>
-                  <p className="text-white/50 text-[14px] leading-relaxed">{d.d}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Process */}
-      <section className="relative px-6 py-24 border-t border-white/[0.05]">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-14">
-            <SectionLabel>Proceso</SectionLabel>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-white tracking-tight">
-              De la llamada al sistema en vivo.
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-4">
-            {process.map((p, i) => (
-              <motion.div
-                key={p.n}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="relative bg-gradient-to-b from-[#111114] to-[#0a0a0c] border border-white/[0.07] rounded-2xl p-6 group hover:border-[#a3e635]/20 transition"
-              >
-                <div className="font-mono text-[#a3e635]/40 text-3xl font-semibold mb-4 group-hover:text-[#a3e635]/80 transition">
-                  {p.n}
-                </div>
-                <h3 className="text-white font-semibold text-lg mb-2">{p.t}</h3>
-                <p className="text-white/50 text-[13.5px] leading-relaxed">
-                  {p.d}
+              <div className="space-y-5 text-[14px] text-[#9b9b9b] leading-relaxed font-sans">
+                <p>
+                  La mayoría de las agencias te entregan una página web sencilla que solo sirve de aparador digital. En ONYX te construyo sistemas completos: herramientas automáticas que atienden a tus visitas, organizan tu agenda de citas, procesan reservas y facilitan la administración de tu negocio.
                 </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Target */}
-      <section className="px-6 py-24 border-t border-white/[0.05]">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="relative bg-gradient-to-br from-[#111114] to-[#0a0a0c] border border-white/[0.08] rounded-3xl p-10 md:p-14 overflow-hidden"
-          >
-            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#a3e635]/[0.06] rounded-full blur-3xl pointer-events-none" />
-            <div className="relative">
-              <div className="w-12 h-12 rounded-xl bg-[#a3e635]/10 border border-[#a3e635]/20 text-[#a3e635] flex items-center justify-center mb-6">
-                <Target size={22} />
-              </div>
-              <h3 className="font-display text-3xl md:text-4xl font-bold text-white tracking-tight mb-5 max-w-2xl">
-                ¿Eres el cliente ideal de ONYX?
-              </h3>
-              <p className="text-white/60 text-[15.5px] leading-relaxed mb-6">
-                Arrancamos con negocios locales en Ciudad Guzmán — dueños que operan
-                uno o varios puntos de contacto sin equipo técnico, con procesos
-                manuales que les quitan 10+ horas a la semana.
-              </p>
-              <p className="text-white/45 text-[14px]">
-                Gimnasios, barberías, consultorios, comercios con WhatsApp saturado,
-                restaurantes con reservas manuales. Si te suena, hablemos.
-              </p>
-              <div className="mt-8">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 bg-[#a3e635] text-black hover:bg-[#b8f069] rounded-full px-6 h-11 text-[13px] font-semibold transition"
-                >
-                  Agendar diagnóstico gratis <ArrowUpRight size={14} />
-                </Link>
+                <p>
+                  No es una plataforma compleja en la que tengas que pasar horas aprendiendo a configurar conexiones. Es un servicio gestionado: me encargo del diseño, la puesta en marcha de todas las conexiones automáticas y el soporte técnico constante para que todo funcione sin complicaciones.
+                </p>
+                <p>
+                  Comencé en Ciudad Guzmán ayudando a comercios locales, barberías y gimnasios que perdían valiosas horas resolviendo las mismas dudas una y otra vez por WhatsApp, y hoy llevo esas automatizaciones para optimizar la operación de PyMEs en todo Jalisco.
+                </p>
               </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
+          </section>
 
-      {/* CTA */}
-      <section className="relative px-6 py-32 overflow-hidden">
-        <AmbientGlow />
-        <div className="max-w-4xl mx-auto text-center relative">
-          <Sparkles className="text-[#a3e635] mx-auto mb-6" size={32} />
-          <h2 className="font-display text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.02] mb-6">
-            El futuro es <em className="text-[#a3e635] font-display italic">ONYX</em>.
-          </h2>
-          <p className="text-white/55 text-lg max-w-xl mx-auto mb-10">
-            Visita el sitio oficial para conocer ONYX EDU, ONYX APS y la visión
-            completa de la empresa.
-          </p>
-          <a
-            href="https://onyxinc.dev"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 bg-white text-black hover:bg-white/90 rounded-full px-8 h-12 text-[14px] font-semibold transition"
-          >
-            Ir a ONYX Inc. <ArrowUpRight size={15} />
-          </a>
-        </div>
-      </section>
+          {/* Servicios Section */}
+          <section className="space-y-4 pt-6 border-t border-[#2c2c2c]/40">
+            <span className="text-[11px] font-mono text-[#9b9b9b]/50 uppercase tracking-widest block font-semibold">
+              Servicios
+            </span>
+            
+            <div className="space-y-4">
+              {services.map((item) => (
+                <div
+                  key={item.t}
+                  className="flex items-start gap-4 text-[14px] py-1"
+                >
+                  <div className="w-7 h-7 rounded bg-[#222222] border border-[#2c2c2c] flex items-center justify-center text-[#9b9b9b] shrink-0 mt-0.5">
+                    {item.icon}
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-white font-medium">{item.t}</h3>
+                    <p className="text-[#9b9b9b] leading-relaxed text-[13.5px]">
+                      {item.d}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
 
-      <Footer />
+          {/* Diferenciadores Section */}
+          <section className="space-y-4 pt-6 border-t border-[#2c2c2c]/40">
+            <span className="text-[11px] font-mono text-[#9b9b9b]/50 uppercase tracking-widest block font-semibold">
+              Diferenciadores
+            </span>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+              {differentiators.map((item) => (
+                <div
+                  key={item.t}
+                  className="flex gap-4 text-[14px]"
+                >
+                  <div className="w-7 h-7 rounded bg-[#222222] border border-[#2c2c2c] flex items-center justify-center text-[#9b9b9b] shrink-0 mt-0.5">
+                    {item.icon}
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-white font-medium">{item.t}</h3>
+                    <p className="text-[#9b9b9b] leading-relaxed text-[13.5px]">
+                      {item.d}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Proceso Section */}
+          <section className="space-y-4 pt-6 border-t border-[#2c2c2c]/40">
+            <span className="text-[11px] font-mono text-[#9b9b9b]/50 uppercase tracking-widest block font-semibold">
+              Proceso
+            </span>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {processSteps.map((step) => (
+                <div
+                  key={step.n}
+                  className="bg-[#222222]/20 border border-[#2c2c2c] rounded-xl p-5 space-y-3"
+                >
+                  <span className="font-mono text-[22px] font-bold text-[#a3e635]/50 block leading-none">
+                    {step.n}
+                  </span>
+                  <div className="space-y-1">
+                    <h4 className="text-white font-semibold text-[14px]">
+                      {step.t}
+                    </h4>
+                    <p className="text-[#9b9b9b] text-[13px] leading-relaxed">
+                      {step.d}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Cliente Ideal Section */}
+          <section className="pt-6 border-t border-[#2c2c2c]/40">
+            <div className="bg-[#222222]/30 border border-[#2c2c2c] rounded-2xl p-6 md:p-8 space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-7 h-7 rounded bg-[#222222] border border-[#2c2c2c] flex items-center justify-center text-[#a3e635] shrink-0">
+                  <Target size={14} />
+                </div>
+                <h3 className="text-[18px] font-bold text-white tracking-tight">
+                  ¿Eres el cliente ideal de ONYX?
+                </h3>
+              </div>
+
+              <div className="space-y-4 text-[14px] text-[#9b9b9b] leading-relaxed font-sans">
+                <p>
+                  Trabajo principalmente con negocios locales — dueños que operan uno o varios puntos de contacto físicos o digitales sin equipo técnico, y que pierden más de 10 horas semanales atendiendo tareas repetitivas y manuales.
+                </p>
+                <p className="text-[13.5px] opacity-85">
+                  Gimnasios con problemas de registro, barberías con agendamiento caótico, comercios de retail con WhatsApp saturado de las mismas preguntas, o consultorios médicos. Si tu negocio califica, puedo ayudarte.
+                </p>
+              </div>
+
+              <div className="pt-2">
+                <a
+                  href="https://wa.me/523340865087"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-black bg-[#a3e635] hover:bg-[#b8f069] transition rounded-lg px-4 py-2"
+                >
+                  <span>Agendar diagnóstico gratis</span>
+                  <ArrowUpRight size={13} />
+                </a>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </div>
     </main>
   );
 }
