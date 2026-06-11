@@ -37,6 +37,7 @@ export default function Footer() {
                 { l: "About", h: "/about" },
                 { l: "Projects", h: "/projects" },
                 { l: "ONYX Inc.", h: "/onyx" },
+                { l: "Blog", h: "/blog" },
                 { l: "Contact", h: "/contact" },
               ].map((x) => (
                 <li key={x.h}>
@@ -72,6 +73,14 @@ export default function Footer() {
                 >
                   ONYX Inc. →
                 </a>
+              </li>
+              <li>
+                <Link
+                  href="/projects#open-carrusel"
+                  className="text-white/60 hover:text-[#a3e635] transition-colors"
+                >
+                  Open Carrusel →
+                </Link>
               </li>
             </ul>
           </div>

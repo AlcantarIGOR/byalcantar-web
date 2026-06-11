@@ -56,6 +56,16 @@ const otherProjects = [
     url: "https://onyxinc.dev",
   },
   {
+    name: "Open Carrusel",
+    type: "Herramienta interna",
+    icon: <Sparkles size={18} />,
+    status: "En uso",
+    tagline: "Automatización de carruseles con IA",
+    desc: "Creador visual de carruseles de Instagram usando Claude CLI, Puppeteer para renderizado y exportación a PNG, y Next.js 16. Diseñado para automatizar mi creación de contenido de marca personal.",
+    tags: ["Next.js 16", "Claude CLI", "Puppeteer", "Tailwind v4"],
+    url: "https://github.com/Hainrixz/open-carrusel",
+  },
+  {
     name: "Diagnóstico Digital",
     type: "Automatización · ONYX Inc.",
     icon: <FileSearch size={18} />,
@@ -285,6 +295,7 @@ export default function Projects() {
             {otherProjects.map((p, i) => (
               <motion.div
                 key={p.name}
+                id={p.name.toLowerCase().replace(/\s+/g, "-")}
                 initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
