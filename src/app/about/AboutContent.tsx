@@ -280,6 +280,19 @@ export default function AboutContent() {
             </div>
           </section>
 
+          {/* Certificaciones Section */}
+          <section className="space-y-4 pt-6 border-t border-[#2c2c2c]/40">
+            <span className="text-[11px] font-mono text-[#9b9b9b]/50 uppercase tracking-widest block font-semibold">
+              Certificaciones
+            </span>
+            
+            <div className="bg-[#222222]/10 border border-dashed border-[#2c2c2c] rounded-xl p-5 text-center">
+              <span className="text-[13px] font-mono text-[#9b9b9b]/60">
+                Próximamente · Certificaciones de Especialización en Inteligencia Artificial y Automatización
+              </span>
+            </div>
+          </section>
+
           {/* Get in Touch / CTA Section */}
           <section className="pt-10 border-t border-[#2c2c2c]/40 space-y-4">
             <p className="text-[14px] text-[#9b9b9b] leading-relaxed font-sans">
