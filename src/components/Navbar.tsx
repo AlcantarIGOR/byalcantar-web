@@ -41,7 +41,7 @@ export default function Navbar() {
           <Logo size={30} />
           <span className="font-mono text-sm tracking-wider text-white/90 group-hover:text-white transition">
             byalcantar
-            <span className="text-[#a3e635]">.</span>dev
+            <span className="text-[#a3e635]">.</span>me
           </span>
         </Link>
 

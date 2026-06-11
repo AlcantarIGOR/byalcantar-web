@@ -27,10 +27,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://byalcantar.dev"),
+  metadataBase: new URL("https://byalcantar.me"),
   title: {
     default: "Juan Alcántar — AI Engineering Student & Founder de ONYX Inc.",
-    template: "%s | byalcantar.dev",
+    template: "%s | byalcantar.me",
   },
   description:
     "Construyendo desde Jalisco — IA, automatización y herramientas para el siguiente nivel. Portafolio personal de Juan Alcántar (@byalcantar), fundador de ONYX Inc.",
@@ -59,8 +59,8 @@ export const metadata: Metadata = {
     title: "Juan Alcántar — AI Engineering Student & Founder",
     description:
       "Construyendo desde Jalisco — IA, automatización y herramientas para el siguiente nivel.",
-    url: "https://byalcantar.dev",
-    siteName: "byalcantar.dev",
+    url: "https://byalcantar.me",
+    siteName: "byalcantar.me",
     locale: "es_MX",
     type: "website",
     images: [

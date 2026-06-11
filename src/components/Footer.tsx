@@ -15,7 +15,7 @@ export default function Footer() {
             <div className="flex items-center gap-2.5 mb-4">
               <Logo size={32} />
               <span className="font-mono text-sm tracking-wider text-white">
-                byalcantar<span className="text-[#a3e635]">.</span>dev
+                byalcantar<span className="text-[#a3e635]">.</span>me
               </span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
