@@ -22,8 +22,8 @@ const channels = [
   {
     icon: <Mail size={22} />,
     label: "Email — preferido",
-    value: "founder@onyxinc.dev",
-    href: "mailto:founder@onyxinc.dev",
+    value: "hola@byalcantar.me",
+    href: "mailto:hola@byalcantar.me",
     note: "Respuesta típica en 24h · Para cotizaciones, colaboraciones, o preguntas técnicas",
     primary: true,
   },
@@ -37,8 +37,8 @@ const channels = [
   {
     icon: <Instagram size={22} />,
     label: "Instagram",
-    value: "@byalcantar.dev",
-    href: "https://www.instagram.com/byalcantar.dev",
+    value: "@byalcantar",
+    href: "https://www.instagram.com/byalcantar",
     note: "Proceso diario · Construyo en público · Behind the scenes",
   },
   {
@@ -210,13 +210,13 @@ export default function Contact() {
                 t: "Si eres founder/dev",
                 d: "Dime qué estás construyendo y qué necesitas. Colaboro gratis en cosas que me intrigan — si hay chemistry, seguimos.",
                 tag: "Colab · open",
-                href: "mailto:founder@onyxinc.dev",
+                href: "mailto:hola@byalcantar.me",
               },
               {
                 t: "Si eres estudiante",
                 d: "Si usas MoodleSync o estás por entrar a IA, escríbeme. Siempre contesto preguntas técnicas de otros estudiantes.",
                 tag: "Free",
-                href: "mailto:founder@onyxinc.dev",
+                href: "mailto:hola@byalcantar.me",
               },
             ].map((x, i) => (
               <motion.a

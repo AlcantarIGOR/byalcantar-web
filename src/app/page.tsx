@@ -504,17 +504,17 @@ function FinalCTA() {
 
           <div className="flex flex-wrap gap-3 justify-center items-center">
             <MagneticButton
-              href="mailto:founder@onyxinc.dev"
+              href="mailto:hola@byalcantar.me"
               className="inline-flex items-center gap-2 bg-[#a3e635] text-black hover:bg-[#b8f069] rounded-full px-7 h-12 text-[14px] font-semibold shadow-[0_0_32px_rgba(163,230,53,0.4)] transition"
             >
-              <Mail size={16} /> founder@onyxinc.dev
+              <Mail size={16} /> hola@byalcantar.me
             </MagneticButton>
           </div>
 
           <div className="flex justify-center gap-5 mt-10">
             {[
               { i: <Github size={18} />, h: "https://github.com/AlcantarIGOR", l: "GitHub" },
-              { i: <Instagram size={18} />, h: "https://www.instagram.com/byalcantar.dev", l: "Instagram" },
+              { i: <Instagram size={18} />, h: "https://www.instagram.com/byalcantar", l: "Instagram" },
             ].map((x) => (
               <a
                 key={x.l}

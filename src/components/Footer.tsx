@@ -99,7 +99,7 @@ export default function Footer() {
                 <Github size={15} /> GitHub
               </a>
               <a
-                href="https://www.instagram.com/byalcantar.dev"
+                href="https://www.instagram.com/byalcantar"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors"
@@ -107,7 +107,7 @@ export default function Footer() {
                 <Instagram size={15} /> Instagram
               </a>
               <a
-                href="mailto:founder@onyxinc.dev"
+                href="mailto:hola@byalcantar.me"
                 className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors"
               >
                 <Mail size={15} /> Email
