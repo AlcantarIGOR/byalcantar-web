@@ -81,12 +81,12 @@ export default function ProjectDetailContent({ id }: ProjectDetailContentProps) 
   }> = {
     moodlesync: {
       title: "MoodleSync",
-      subtitle: "EL OS DEL ESTUDIANTE · PLATAFORMA EDUCATIVA ITCG",
+      subtitle: "AGENTE VERTICAL EDUCATIVO · PLATAFORMA ITCG",
       timeline: "Abril 2026 – Presente",
       location: "Ciudad Guzmán, Jalisco, México",
-      role: "Creador del Proyecto",
+      role: "Creador del Agente",
       github: "https://github.com/AlcantarIGOR/moodlesync-saas",
-      intro: "MoodleSync es una plataforma web creada para facilitar la entrega de tareas y la organización de los estudiantes del Instituto Tecnológico de Ciudad Guzmán (ITCG). Permite ver el calendario escolar, organizar tareas pendientes y tomar notas de forma sencilla en un solo lugar.",
+      intro: "MoodleSync es un agente vertical educativo creado para operar la vida académica de los estudiantes del Instituto Tecnológico de Ciudad Guzmán (ITCG). Conecta la plataforma Moodle con un calendario escolar, organizador de entregas y optimizador instantáneo de documentos.",
       sections: [
         {
           title: "Organizador Visual de Tareas",
@@ -108,28 +108,102 @@ export default function ProjectDetailContent({ id }: ProjectDetailContentProps) 
       ctaHref: "https://github.com/AlcantarIGOR/moodlesync-saas",
       ctaLabel: "Ver en GitHub"
     },
-    "onyx-digital-system": {
-      title: "ONYX Digital System",
-      subtitle: "SISTEMA OPERATIVO DIGITAL PARA PYMES",
+    "onyx-automation": {
+      title: "ONYX Automation ⭐",
+      subtitle: "TIER 3 · PRODUCTO ESTRELLA · AGENTE VERTICAL Y AUTOMATIZACIÓN PYME",
       timeline: "Enero 2026 – Presente",
       location: "Ciudad Guzmán, Jalisco, México",
-      role: "Líder de Proyecto @ ONYX Inc.",
-      intro: "ONYX Digital System es mi solución completa para la digitalización de tu negocio. Combina un sitio web profesional con flujos de trabajo automáticos que gestionan citas, reservas y clientes de forma centralizada y directa.",
+      role: "Líder de Proyecto & AI Engineer @ ONYX Inc.",
+      intro: "ONYX Automation es el producto estrella de ONYX Inc. Funciona como un sistema operativo digital para el negocio cliente: integra un sitio web completo, agentes de atención al cliente automatizada por WhatsApp, gestión de citas y tableros de métricas en una sola entrega gestionada.",
       sections: [
         {
-          title: "Sitio Web Profesional con Asistente Virtual",
-          desc: "Diseñamos un portal profesional a la medida de tu marca. Incluye un asistente automático por chat que responde dudas frecuentes de tus servicios de forma inmediata, ayuda a guiar a las visitas de tu página y facilita el contacto directo las 24 horas del día.",
+          title: "Sistema Operativo Digital & Sitio Web",
+          desc: "Construimos un portal a medida optimizado para conversión que conecta directo con el flujo operativo de tu PyME, eliminando fricción con los usuarios.",
           image: "/onyx_digital_system.png"
         },
         {
-          title: "Recordatorios de Citas Automáticos",
-          desc: "El sistema conecta de manera automática los formularios de contacto de tu sitio con un calendario digital de trabajo. Cuando un cliente potencial agenda una cita, recibe de forma inmediata confirmaciones y recordatorios por WhatsApp, reduciendo las inasistencias en tu negocio.",
+          title: "Agente Comercial por WhatsApp & n8n",
+          desc: "Flujos inteligentes impulsados por n8n e Inteligencia Artificial que atienden dudas, califican prospectos y agendan citas de forma autónoma las 24 horas.",
+          image: "/onyx_digital_system.png"
+        },
+        {
+          title: "Integraciones & Dashboard de Métricas",
+          desc: "Sincronización directa con Google Calendar, MercadoPago y WhatsApp Business API para dar visibilidad total del rendimiento de tu negocio.",
           image: "/onyx_digital_system.png"
         }
       ],
-      ctaText: "¿Quieres ver cómo funciona en vivo y cómo puede ayudar a tu negocio? Agenda un diagnóstico gratuito por WhatsApp.",
+      ctaText: "¿Quieres automatizar la atención y ventas de tu negocio? Agenda un diagnóstico digital gratuito.",
       ctaHref: "https://wa.me/523340865087",
-      ctaLabel: "Agendar por WhatsApp"
+      ctaLabel: "Agendar Diagnóstico por WhatsApp"
+    },
+    "onyx-digital-system": {
+      title: "ONYX Automation ⭐",
+      subtitle: "TIER 3 · PRODUCTO ESTRELLA · AGENTE VERTICAL Y AUTOMATIZACIÓN PYME",
+      timeline: "Enero 2026 – Presente",
+      location: "Ciudad Guzmán, Jalisco, México",
+      role: "Líder de Proyecto & AI Engineer @ ONYX Inc.",
+      intro: "ONYX Automation es el producto estrella de ONYX Inc. Funciona como un sistema operativo digital para el negocio cliente: integra un sitio web completo, agentes de atención al cliente automatizada por WhatsApp, gestión de citas y tableros de métricas en una sola entrega gestionada.",
+      sections: [
+        {
+          title: "Sistema Operativo Digital & Sitio Web",
+          desc: "Construimos un portal a medida optimizado para conversión que conecta directo con el flujo operativo de tu PyME, eliminando fricción con los usuarios.",
+          image: "/onyx_digital_system.png"
+        },
+        {
+          title: "Agente Comercial por WhatsApp & n8n",
+          desc: "Flujos inteligentes impulsados por n8n e Inteligencia Artificial que atienden dudas, califican prospectos y agendan citas de forma autónoma las 24 horas.",
+          image: "/onyx_digital_system.png"
+        }
+      ],
+      ctaText: "¿Quieres automatizar la atención y ventas de tu negocio? Agenda un diagnóstico digital gratuito.",
+      ctaHref: "https://wa.me/523340865087",
+      ctaLabel: "Agendar Diagnóstico por WhatsApp"
+    },
+    "onyx-launch": {
+      title: "ONYX Launch",
+      subtitle: "TIER 1 · LANDING PAGE PROFESIONAL MOBILE-FIRST",
+      timeline: "Enero 2026 – Presente",
+      location: "Ciudad Guzmán, Jalisco, México",
+      role: "Diseñador & Desarrollador Web @ ONYX Inc.",
+      intro: "ONYX Launch es la solución de entrada para negocios locales y profesionales independientes que necesitan establecer su presencia digital de manera rápida, moderna y profesional en internet.",
+      sections: [
+        {
+          title: "Diseño Móvil de Alto Impacto",
+          desc: "Sitios de una sola página (landing) construidos en Framer o Webflow, enfocados en velocidad de carga, tipografía limpia y experiencia móvil impecable.",
+          image: "/onyx_launch_pro.png"
+        },
+        {
+          title: "Sección de Contacto Directo",
+          desc: "Facilita que tus clientes te llamen o te escriban por WhatsApp con un solo clic desde su teléfono.",
+          image: "/onyx_launch_pro.png"
+        }
+      ],
+      ctaText: "Establece la presencia digital de tu negocio hoy mismo.",
+      ctaHref: "https://wa.me/523340865087",
+      ctaLabel: "Solicitar ONYX Launch"
+    },
+    "onyx-pro": {
+      title: "ONYX Pro",
+      subtitle: "TIER 2 · PRESENCIA DIGITAL + AUTOMATIZACIÓN SIMPLE",
+      timeline: "Enero 2026 – Presente",
+      location: "Ciudad Guzmán, Jalisco, México",
+      role: "Desarrollador de Automatizaciones @ ONYX Inc.",
+      intro: "ONYX Pro está diseñado para negocios que ya tienen flujo de clientes pero pierden tiempo valioso en respuestas repetitivas de comunicación. Combina una landing avanzada con un flujo inicial de automatización en n8n.",
+      sections: [
+        {
+          title: "Landing Page Avanzada",
+          desc: "Sitio web optimizado con secciones detalladas de servicios, testimonios y llamados a la acción estratégicos.",
+          image: "/onyx_launch_pro.png"
+        },
+        {
+          title: "Flujo de Automatización con n8n",
+          desc: "Integración de formulario o mensaje que dispara alertas instantáneas a tu celular o respuestas automáticas inmediatas por WhatsApp.",
+          image: "/onyx_launch_pro.png"
+        }
+      ],
+      ctaText: "Empieza a automatizar tus respuestas a clientes con ONYX Pro.",
+      ctaHref: "https://wa.me/523340865087",
+      ctaLabel: "Solicitar ONYX Pro"
     },
     "onyx-launch-pro": {
       title: "ONYX Launch / Pro",
@@ -137,22 +211,46 @@ export default function ProjectDetailContent({ id }: ProjectDetailContentProps) 
       timeline: "Enero 2026 – Presente",
       location: "Ciudad Guzmán, Jalisco, México",
       role: "Diseñador y Desarrollador @ ONYX Inc.",
-      intro: "ONYX Launch y ONYX Pro son soluciones ágiles pensadas para negocios locales y profesionales independientes que necesitan iniciar su presencia en internet de forma profesional y con las primeras herramientas de comunicación automáticas activas.",
+      intro: "ONYX Launch y ONYX Pro son soluciones ágiles pensadas para negocios locales y profesionales independientes que necesitan iniciar su presencia en internet.",
       sections: [
         {
           title: "Páginas Web para Dispositivos Móviles",
-          desc: "Creamos páginas de presentación optimizadas especialmente para celulares. Con un diseño moderno, carga rápida y botones de llamada directa para que tus clientes puedan contactarte con un solo toque.",
-          image: "/onyx_launch_pro.png"
-        },
-        {
-          title: "Alertas Directas a tu WhatsApp",
-          desc: "Configuro el sistema para que cada vez que alguien llene el formulario de contacto en tu sitio, recibas una notificación instantánea y ordenada en tu celular por WhatsApp, permitiéndote responder en segundos.",
+          desc: "Creamos páginas de presentación optimizadas especialmente para celulares.",
           image: "/onyx_launch_pro.png"
         }
       ],
-      ctaText: "Inicia la transformación digital de tu marca personal o negocio local hoy mismo. Conversemos sobre tu proyecto.",
+      ctaText: "Inicia la transformación digital de tu marca personal.",
       ctaHref: "https://wa.me/523340865087",
       ctaLabel: "Solicitar Presupuesto"
+    },
+    "asistente-whatsapp": {
+      title: "Asistente WhatsApp (JARVIS)",
+      subtitle: "AGENTE PERSONAL HÍBRIDO · DOCKER + CLAUDE 3.5 HAIKU + OPENWA",
+      timeline: "Marzo 2026 – Presente",
+      location: "Ciudad Guzmán, Jalisco, México",
+      role: "Creador & AI Systems Engineer",
+      github: "https://github.com/AlcantarIGOR/Agente-WhatsApp",
+      intro: "Asistente inteligente en WhatsApp que opera en modalidad híbrida (Personal / Negocio). Cuenta con enrutamiento tri-state, bypass de latencia para el dueño, pausa nocturna y soporte de atención comercial automatizada con IA.",
+      sections: [
+        {
+          title: "Enrutamiento Inteligente Tri-State",
+          desc: "Distingue automáticamente entre 3 perfiles de contacto: 1) Dueño (Bypass total, respuesta instantánea de 500ms como JARVIS), 2) Contactos excluidos (Silencio manual absoluto), y 3) Clientes (Respuestas comerciales con delay humano anti-baneo de 5-15s).",
+          image: "/onyx_digital_system.png"
+        },
+        {
+          title: "Stack 100% Local & Seguro (Docker + Express)",
+          desc: "Gateway OpenWA corriendo en contenedor Docker en puerto 2785, bridge en Node.js Express con verificación de firmas criptográficas HMAC y almacenamiento local persistente.",
+          image: "/onyx_digital_system.png"
+        },
+        {
+          title: "Pausa Nocturna y Simulación Mock",
+          desc: "De 10 PM a 8 AM encola mensajes de clientes para enviarlos al iniciar el día. Incluye un modo de simulación (Mock Mode) para probar conversaciones sin gastar tokens de la API de Claude.",
+          image: "/onyx_digital_system.png"
+        }
+      ],
+      ctaText: "¿Quieres implementar un agente inteligente de atención para tu WhatsApp con tu propia infraestructura?",
+      ctaHref: "https://wa.me/523340865087",
+      ctaLabel: "Consultar Implementación"
     },
     "onyx-care": {
       title: "ONYX Care",

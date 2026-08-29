@@ -7,7 +7,8 @@ import {
   Home as HomeIcon, 
   Copy, 
   Check, 
-  ArrowUpRight 
+  ArrowUpRight,
+  Briefcase 
 } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
 import BentoAbout from "@/components/BentoAbout";
@@ -77,10 +78,10 @@ export default function AboutContent() {
       logo: "/logo_onyx.jpg"
     },
     {
-      company: "Cremería La Primavera",
+      company: "Empresa Privada",
       role: "Encargado de Sistemas",
       period: "2024 – 2026",
-      logo: "/logo_primavera.png"
+      logo: null
     }
   ];
 
@@ -215,12 +216,16 @@ export default function AboutContent() {
                   <div className="flex items-center gap-3.5 min-w-0">
                     {/* Logo Image */}
                     <div className="w-7 h-7 rounded-full overflow-hidden relative bg-[#222222] border border-[#2c2c2c] flex items-center justify-center shrink-0">
-                      <Image
-                        src={item.logo}
-                        alt={`${item.company} Logo`}
-                        fill
-                        className="object-cover"
-                      />
+                      {item.logo ? (
+                        <Image
+                          src={item.logo}
+                          alt={`${item.company} Logo`}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <Briefcase size={13} className="text-[#9b9b9b]" />
+                      )}
                     </div>
 
                     {/* Company / Role */}
@@ -298,7 +303,7 @@ export default function AboutContent() {
             <p className="text-[14px] text-[#9b9b9b] leading-relaxed font-sans">
               Si deseas conocer los detalles de algún proyecto o mi disponibilidad, ¡ponte en contacto! Puedes escribirme con total comodidad a través de mi{" "}
               <a 
-                href="https://www.linkedin.com/in/juan-alcantar-flores-929816298/" 
+                href="https://www.linkedin.com/in/john-alcantar-ia/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-white hover:text-[#a3e635] underline underline-offset-4 transition"
@@ -317,7 +322,7 @@ export default function AboutContent() {
 
             <div className="flex gap-3 pt-2">
               <a 
-                href="https://www.linkedin.com/in/juan-alcantar-flores-929816298/" 
+                href="https://www.linkedin.com/in/john-alcantar-ia/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-white hover:text-[#a3e635] transition border border-[#2c2c2c] rounded-lg px-4 py-2 bg-[#222222]/40"

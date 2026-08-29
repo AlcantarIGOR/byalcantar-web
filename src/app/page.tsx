@@ -38,11 +38,11 @@ const experience = [
     logo: "/logo_onyx.jpg",
   },
   {
-    company: "Cremería La Primavera",
+    company: "Empresa Privada",
     role: "Encargado de Sistemas",
     period: "2024–2026",
-    id: "la-primavera",
-    logo: "/logo_primavera.png",
+    id: "empresa-privada",
+    logo: null,
   },
   {
     company: "TecNM ITCG",
@@ -332,12 +332,16 @@ export default function Home() {
                       
                       {/* Brand Logo Image */}
                       <div className="w-8 h-8 rounded-full overflow-hidden relative bg-[#222222] border border-[#2c2c2c] flex items-center justify-center shrink-0 shadow-inner">
-                        <Image
-                          src={item.logo}
-                          alt={`${item.company} Logo`}
-                          fill
-                          className="object-cover"
-                        />
+                        {item.logo ? (
+                          <Image
+                            src={item.logo}
+                            alt={`${item.company} Logo`}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <Briefcase size={14} className="text-[#9b9b9b]" />
+                        )}
                       </div>
 
                       {/* Info strings */}
@@ -363,48 +367,6 @@ export default function Home() {
             <GithubContributions />
           </section>
 
-          {/* Proyectos / Portfolio Section (ggkim style) */}
-          <section className="space-y-12 pt-8 border-t border-[#2c2c2c]/40">
-            <div className="flex items-center justify-between text-[11px] font-mono text-[#9b9b9b]/50 uppercase tracking-wider">
-              <span>Proyectos Destacados</span>
-              <span>Total: {projects.length}</span>
-            </div>
-
-            <div className="space-y-16">
-              {projects.map((proj) => (
-                <div 
-                  key={proj.id} 
-                  id={`project-${proj.id}`}
-                  className="scroll-mt-24"
-                >
-                  <Link href={`/projects/${proj.id}`} className="block space-y-4 group/card">
-                    <div className="space-y-1">
-                      <span className="text-[11px] font-mono text-[#a3e635]/65 group-hover/card:text-[#a3e635] uppercase tracking-widest font-semibold transition-colors">
-                        {proj.subtitle}
-                      </span>
-                      <h3 className="text-[22px] md:text-[26px] font-bold text-white group-hover/card:text-[#a3e635] tracking-tight leading-snug font-sans transition-colors flex items-center gap-1.5">
-                        <span>{proj.title}</span>
-                        <ArrowUpRight size={18} className="opacity-0 -translate-y-0.5 translate-x-0 group-hover/card:opacity-100 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-1 transition-all duration-300" />
-                      </h3>
-                    </div>
-                    
-                    <p className="text-[14px] md:text-[15px] text-[#9b9b9b] group-hover/card:text-white/90 leading-relaxed font-sans max-w-2xl transition-colors">
-                      {proj.desc}
-                    </p>
-
-                    {/* Project Image Container */}
-                    <ProjectImage 
-                      src={proj.image} 
-                      alt={proj.title} 
-                      fallbackColor={proj.fallbackColor}
-                      icon={proj.icon}
-                      id={proj.id}
-                    />
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </section>
 
         </div>
       </div>
